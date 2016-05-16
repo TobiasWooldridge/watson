@@ -3,14 +3,14 @@ package watson.chat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.ITextComponent;
 import watson.PrivateFieldsWatson;
 
 // ----------------------------------------------------------------------------
 /**
- * utility methods for dealing with IChatComponent.
+ * utility methods for dealing with ITextComponent.
  */
 public class ChatComponents
 {
@@ -19,34 +19,34 @@ public class ChatComponents
    * Return true of the chat has associated events (click, hover).
    * 
    * The current Watson highlighting implementation only supports old style
-   * formatting codes and so can only highlight IChatComponents that don't have
+   * formatting codes and so can only highlight ITextComponents that don't have
    * associated events.
    * 
    * @return true of the chat has associated events (click, hover).
    */
-  public static boolean hasEvents(IChatComponent chat)
+  public static boolean hasEvents(ITextComponent chat)
   {
-    return chat.getChatStyle().getChatClickEvent() != null ||
-           chat.getChatStyle().getChatHoverEvent() != null;
+    return chat.getStyle().getClickEvent() != null ||
+           chat.getStyle().getHoverEvent() != null;
   }
 
   // --------------------------------------------------------------------------
   /**
-   * Return an array containing the specified IChatComponent and all its
+   * Return an array containing the specified ITextComponent and all its
    * siblings.
    * 
-   * @return an array containing the specified IChatComponent and all its
+   * @return an array containing the specified ITextComponent and all its
    *         siblings.
    */
   @SuppressWarnings("unchecked")
-  public static ArrayList<IChatComponent> getComponents(IChatComponent chat)
+  public static ArrayList<ITextComponent> getComponents(ITextComponent chat)
   {
-    ArrayList<IChatComponent> components = new ArrayList<IChatComponent>();
+    ArrayList<ITextComponent> components = new ArrayList<ITextComponent>();
     for (Object o : chat)
     {
-      IChatComponent component = (IChatComponent) o;
-      IChatComponent copy = new ChatComponentText(component.getUnformattedTextForChat());
-      copy.setChatStyle(component.getChatStyle().createDeepCopy());
+      ITextComponent component = (ITextComponent) o;
+      ITextComponent copy = new TextComponentString(component.getUnformattedText());
+      copy.setStyle(component.getStyle().createDeepCopy());
       components.add(copy);
     }
     return components;
@@ -57,14 +57,14 @@ public class ChatComponents
    * Return an array containing all of the components in the input array and all
    * of their siblings, in their natural order.
    * 
-   * @param components an array of IChatComponents.
+   * @param components an array of ITextComponents.
    * @return an array containing all of the components in the input array and
    *         all of their siblings, in their natural order.
    */
-  public static ArrayList<IChatComponent> flatten(ArrayList<IChatComponent> components)
+  public static ArrayList<ITextComponent> flatten(ArrayList<ITextComponent> components)
   {
-    ArrayList<IChatComponent> result = new ArrayList<IChatComponent>();
-    for (IChatComponent component : components)
+    ArrayList<ITextComponent> result = new ArrayList<ITextComponent>();
+    for (ITextComponent component : components)
     {
       result.addAll(getComponents(component));
     }
@@ -73,28 +73,28 @@ public class ChatComponents
 
   // --------------------------------------------------------------------------
   /**
-   * Convert an array of IChatComponents into a single IChatComponent with all
+   * Convert an array of ITextComponents into a single ITextComponent with all
    * the individual components as siblings.
    * 
-   * @param component the array of components to be added.
-   * @return an IChatComponent containing copies of all of the components in the
+   * @param components the array of components to be added.
+   * @return an ITextComponent containing copies of all of the components in the
    *         array.
    */
-  public static IChatComponent toChatComponent(ArrayList<IChatComponent> components)
+  public static ITextComponent toChatComponent(ArrayList<ITextComponent> components)
   {
-    ArrayList<IChatComponent> all = flatten(components);
+    ArrayList<ITextComponent> all = flatten(components);
     if (components.size() == 0)
     {
-      return new ChatComponentText("");
+      return new TextComponentString("");
     }
     else
     {
-      IChatComponent result = all.get(0);
+      ITextComponent result = all.get(0);
       for (int i = 1; i < all.size(); ++i)
       {
-        IChatComponent component = all.get(i);
+        ITextComponent component = all.get(i);
 
-        if (component.getUnformattedTextForChat().length() != 0 || !component.getChatStyle().isEmpty())
+        if (component.getUnformattedText().length() != 0 || !component.getStyle().isEmpty())
         {
           result.appendSibling(component);
         }
@@ -106,23 +106,23 @@ public class ChatComponents
   // --------------------------------------------------------------------------
   /**
    * Map a formatting character to the corresponding Minecraft
-   * EnumChatFormatting.
+   * TextFormatting.
    * 
    * @param code the formatting code.
-   * @param the corresponding enum value.
+   * @return  the corresponding enum value.
    */
-  public static EnumChatFormatting getEnumChatFormatting(char code)
+  public static TextFormatting getTextFormatting(char code)
   {
     return _formatCharToEnum.get(code);
   }
 
   // --------------------------------------------------------------------------
   /**
-   * Dump information about the IChatComponent to standard output.
+   * Dump information about the ITextComponent to standard output.
    * 
    * @patam component the component.
    */
-  public static void dump(IChatComponent component)
+  public static void dump(ITextComponent component)
   {
     System.out.println("Formatted: " + component.getFormattedText());
     dump(flatten(getComponents(component)));
@@ -130,31 +130,31 @@ public class ChatComponents
 
   // --------------------------------------------------------------------------
   /**
-   * Dump information about the IChatComponent to standard output.
+   * Dump information about the ITextComponent to standard output.
    * 
    * @patam component the component.
    */
-  public static void dump(ArrayList<IChatComponent> components)
+  public static void dump(ArrayList<ITextComponent> components)
   {
     System.out.println("Dump: " + toChatComponent(components).getFormattedText());
     for (int i = 0; i < components.size(); ++i)
     {
-      IChatComponent c = components.get(i);
+      ITextComponent c = components.get(i);
       System.out.println(i + ": " + hasEvents(c) + ": \"" + c.getFormattedText() + "\" "
-                         + c.getUnformattedTextForChat().length() + " "
-                         + c.getChatStyle().isEmpty() + " " + c.getChatStyle().toString());
+              + c.getUnformattedComponentText().length() + " "
+              + c.getStyle().isEmpty() + " " + c.getStyle().toString());
     }
   }
 
   // --------------------------------------------------------------------------
   /**
-   * Map formatting character to the corresponding Minecraft EnumChatFormatting.
+   * Map formatting character to the corresponding Minecraft TextFormatting.
    */
-  private static HashMap<Character, EnumChatFormatting> _formatCharToEnum = new HashMap<Character, EnumChatFormatting>();
+  private static HashMap<Character, TextFormatting> _formatCharToEnum = new HashMap<Character, TextFormatting>();
 
   static
   {
-    for (EnumChatFormatting format : EnumChatFormatting.values())
+    for (TextFormatting format : TextFormatting.values())
     {
       _formatCharToEnum.put(PrivateFieldsWatson.formattingCode.get(format), format);
     }

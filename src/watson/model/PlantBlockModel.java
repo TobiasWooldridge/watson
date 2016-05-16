@@ -1,8 +1,8 @@
 package watson.model;
 
-import net.minecraft.client.renderer.GlStateManager;
+import com.mumfrey.liteloader.gl.GL;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 
 import org.lwjgl.opengl.GL11;
 
@@ -35,7 +35,7 @@ public class PlantBlockModel extends BlockModel
   public void render(BlockType blockType, int x, int y, int z)
   {
     Tessellator tess = Tessellator.getInstance();
-    WorldRenderer wr = tess.getWorldRenderer();
+    VertexBuffer vr = tess.getBuffer();
 
     double x1 = x + blockType.getX1();
     double y1 = y + blockType.getY1();
@@ -45,27 +45,27 @@ public class PlantBlockModel extends BlockModel
     double z2 = z + blockType.getZ2();
 
     // First rectangle.
-    wr.startDrawing(GL11.GL_LINE_LOOP);
-    wr.setColorRGBA(blockType.getARGB().getRed(),
-      blockType.getARGB().getGreen(), blockType.getARGB().getBlue(),
-      blockType.getARGB().getAlpha());
+    vr.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
+    vr.color(blockType.getARGB().getRed(),
+            blockType.getARGB().getGreen(), blockType.getARGB().getBlue(),
+            blockType.getARGB().getAlpha());
     GL11.glLineWidth(blockType.getLineWidth());
-    wr.addVertex(x1, y1, z1);
-    wr.addVertex(x2, y1, z2);
-    wr.addVertex(x2, y2, z2);
-    wr.addVertex(x1, y2, z1);
+    vr.pos(x1, y1, z1);
+    vr.pos(x2, y1, z2);
+    vr.pos(x2, y2, z2);
+    vr.pos(x1, y2, z1);
     tess.draw();
 
     // Second rectangle.
-    wr.startDrawing(GL11.GL_LINE_LOOP);
-    wr.setColorRGBA(blockType.getARGB().getRed(),
-      blockType.getARGB().getGreen(), blockType.getARGB().getBlue(),
-      blockType.getARGB().getAlpha());
+    vr.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
+    vr.color(blockType.getARGB().getRed(),
+            blockType.getARGB().getGreen(), blockType.getARGB().getBlue(),
+            blockType.getARGB().getAlpha());
     GL11.glLineWidth(blockType.getLineWidth());
-    wr.addVertex(x1, y1, z2);
-    wr.addVertex(x2, y1, z1);
-    wr.addVertex(x2, y2, z1);
-    wr.addVertex(x1, y2, z2);
+    vr.pos(x1, y1, z2);
+    vr.pos(x2, y1, z1);
+    vr.pos(x2, y2, z1);
+    vr.pos(x1, y2, z2);
     tess.draw();
   } // render
 } // class PlantBlockModel

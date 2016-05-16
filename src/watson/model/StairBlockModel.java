@@ -1,8 +1,9 @@
 package watson.model;
 
+import com.mumfrey.liteloader.gl.GL;
 import net.minecraft.client.renderer.Tessellator;
 
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import org.lwjgl.opengl.GL11;
 
 import watson.db.BlockType;
@@ -30,7 +31,7 @@ public class StairBlockModel extends BlockModel
   public void render(BlockType blockType, int x, int y, int z)
   {
     Tessellator tess = Tessellator.getInstance();
-      WorldRenderer wr = tess.getWorldRenderer();
+      VertexBuffer vr = tess.getBuffer();
 
     // Opposite corners.
     double x1 = x + blockType.getX1();
@@ -45,57 +46,57 @@ public class StairBlockModel extends BlockModel
     double zMid = z + 0.5 * (blockType.getZ1() + blockType.getZ2());
 
     // x1 side.
-      wr.startDrawing(GL11.GL_LINE_LOOP);
-      wr.setColorRGBA(blockType.getARGB().getRed(),
+      vr.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
+      vr.color(blockType.getARGB().getRed(),
       blockType.getARGB().getGreen(), blockType.getARGB().getBlue(),
       blockType.getARGB().getAlpha());
     GL11.glLineWidth(blockType.getLineWidth());
-      wr.addVertex(x1, y1, z1);
-      wr.addVertex(x1, y1, z2);
-      wr.addVertex(x1, y2, z2);
-      wr.addVertex(x1, y2, zMid);
-      wr.addVertex(x1, yMid, zMid);
-      wr.addVertex(x1, yMid, z1);
+      vr.pos(x1, y1, z1);
+      vr.pos(x1, y1, z2);
+      vr.pos(x1, y2, z2);
+      vr.pos(x1, y2, zMid);
+      vr.pos(x1, yMid, zMid);
+      vr.pos(x1, yMid, z1);
     tess.draw();
 
     // x2 side.
-      wr.startDrawing(GL11.GL_LINE_LOOP);
-      wr.setColorRGBA(blockType.getARGB().getRed(),
+    vr.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
+      vr.color(blockType.getARGB().getRed(),
       blockType.getARGB().getGreen(), blockType.getARGB().getBlue(),
       blockType.getARGB().getAlpha());
     GL11.glLineWidth(blockType.getLineWidth());
-      wr.addVertex(x2, y1, z1);
-      wr.addVertex(x2, y1, z2);
-      wr.addVertex(x2, y2, z2);
-      wr.addVertex(x2, y2, zMid);
-      wr.addVertex(x2, yMid, zMid);
-      wr.addVertex(x2, yMid, z1);
+      vr.pos(x2, y1, z1);
+      vr.pos(x2, y1, z2);
+      vr.pos(x2, y2, z2);
+      vr.pos(x2, y2, zMid);
+      vr.pos(x2, yMid, zMid);
+      vr.pos(x2, yMid, z1);
     tess.draw();
 
     // Horizontal lines joining the two sides.
-      wr.startDrawing(GL11.GL_LINES);
-      wr.setColorRGBA(blockType.getARGB().getRed(),
+    vr.begin(GL.GL_LINES, GL.VF_POSITION);
+      vr.color(blockType.getARGB().getRed(),
       blockType.getARGB().getGreen(), blockType.getARGB().getBlue(),
       blockType.getARGB().getAlpha());
     GL11.glLineWidth(blockType.getLineWidth());
 
-      wr.addVertex(x1, y1, z1);
-      wr.addVertex(x2, y1, z1);
+      vr.pos(x1, y1, z1);
+      vr.pos(x2, y1, z1);
 
-      wr.addVertex(x1, y1, z2);
-      wr.addVertex(x2, y1, z2);
+      vr.pos(x1, y1, z2);
+      vr.pos(x2, y1, z2);
 
-      wr.addVertex(x1, y2, z2);
-      wr.addVertex(x2, y2, z2);
+      vr.pos(x1, y2, z2);
+      vr.pos(x2, y2, z2);
 
-      wr.addVertex(x1, y2, zMid);
-      wr.addVertex(x2, y2, zMid);
+      vr.pos(x1, y2, zMid);
+      vr.pos(x2, y2, zMid);
 
-      wr.addVertex(x1, yMid, zMid);
-      wr.addVertex(x2, yMid, zMid);
+      vr.pos(x1, yMid, zMid);
+      vr.pos(x2, yMid, zMid);
 
-      wr.addVertex(x1, yMid, z1);
-      wr.addVertex(x2, yMid, z1);
+      vr.pos(x1, yMid, z1);
+      vr.pos(x2, yMid, z1);
     tess.draw();
   } // render
 } // class StairBlockModel

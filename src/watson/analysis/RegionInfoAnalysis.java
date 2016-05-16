@@ -5,7 +5,7 @@ import static watson.analysis.MiscPatterns.WG_REGIONS;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import watson.Configuration;
 import watson.Controller;
 import watson.chat.IMatchedChatHandler;
@@ -29,7 +29,7 @@ public class RegionInfoAnalysis extends Analysis
     addMatchedChatHandler(WG_REGIONS, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         wgRegions(chat, m);
         return true;
@@ -42,7 +42,7 @@ public class RegionInfoAnalysis extends Analysis
    * Respond to wg.regions by issuing the corresponding /region info commands.
    */
   @SuppressWarnings("unused")
-  void wgRegions(IChatComponent chat, Matcher m)
+  void wgRegions(ITextComponent chat, Matcher m)
   {
     long now = System.currentTimeMillis();
     if (now - _lastCommandTime > (long) (Configuration.instance.getRegionInfoTimeoutSeconds() * 1000))

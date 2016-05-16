@@ -20,9 +20,10 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.network.INetHandler;
-import net.minecraft.network.play.client.C01PacketChatMessage;
-import net.minecraft.network.play.server.S01PacketJoinGame;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.network.play.client.CPacketChatMessage;
+import net.minecraft.network.play.server.SPacketJoinGame;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.LWJGLException;
@@ -164,12 +165,12 @@ public class LiteModWatson implements JoinGameListener, ChatFilter, Tickable,
    * Perform actions triggered on initial join.
    *
    * @see com.mumfrey.liteloader.JoinGameListener#onJoinGame(net.minecraft.network.INetHandler,
-   *      net.minecraft.network.play.server.S01PacketJoinGame,
+   *      net.minecraft.network.play.server.SPacketJoinGame,
    *      net.minecraft.client.multiplayer.ServerData,
    *      com.mojang.realmsclient.dto.RealmsServer)
    */
   @Override
-  public void onJoinGame(INetHandler netHandler, S01PacketJoinGame joinGamePacket, ServerData serverData,
+  public void onJoinGame(INetHandler netHandler, SPacketJoinGame joinGamePacket, ServerData serverData,
                          RealmsServer realmsServer)
   {
     if (Configuration.instance.isEnabled())
@@ -186,12 +187,12 @@ public class LiteModWatson implements JoinGameListener, ChatFilter, Tickable,
 
   // --------------------------------------------------------------------------
   /**
-   * @see com.mumfrey.liteloader.ChatFilter#onChat(net.minecraft.util.IChatComponent,
+   * @see com.mumfrey.liteloader.ChatFilter#onChat(net.minecraft.util.text.ITextComponent,
    *      java.lang.String,
    *      com.mumfrey.liteloader.core.LiteLoaderEventBroker.ReturnValue)
    */
   @Override
-  public boolean onChat(IChatComponent chat, String message, LiteLoaderEventBroker.ReturnValue<IChatComponent> newMessage)
+  public boolean onChat(ITextComponent chat, String message, LiteLoaderEventBroker.ReturnValue<ITextComponent> newMessage)
   {
     boolean allowChat = ChatProcessor.instance.onChat(chat);
     if (allowChat)
@@ -357,7 +358,7 @@ public class LiteModWatson implements JoinGameListener, ChatFilter, Tickable,
   {
     if (!ClientCommandManager.instance.handleClientCommand(chat))
     {
-      player.sendQueue.addToSendQueue(new C01PacketChatMessage(chat));
+      player.sendQueue.addToSendQueue(new CPacketChatMessage(chat));
     }
   }
 
@@ -472,7 +473,7 @@ public class LiteModWatson implements JoinGameListener, ChatFilter, Tickable,
   protected static void performKeyBinding(ModifiedKeyBinding binding)
   {
     Minecraft mc = Minecraft.getMinecraft();
-    mc.getSoundHandler().playSound(PositionedSoundRecord.create(new ResourceLocation("gui.button.press"), 1.0F));
+    mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(new SoundEvent(new ResourceLocation("gui.button.press")), 1.0F));
     binding.perform();
   }
 

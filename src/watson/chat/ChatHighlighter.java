@@ -12,8 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-import net.minecraft.util.IChatComponent;
-
+import net.minecraft.util.text.ITextComponent;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
@@ -81,7 +80,7 @@ public class ChatHighlighter
    * @param chat the text to highlight.
    * @return highlighted text.
    */
-  public IChatComponent highlight(IChatComponent chat)
+  public ITextComponent highlight(ITextComponent chat)
   {
     if (isReisLikeCode(chat.getFormattedText()))
     {
@@ -89,11 +88,11 @@ public class ChatHighlighter
     }
     else
     {
-      ArrayList<IChatComponent> resultComponents = new ArrayList<IChatComponent>();
-      ArrayList<IChatComponent> components = ChatComponents.getComponents(chat);
+      ArrayList<ITextComponent> resultComponents = new ArrayList<ITextComponent>();
+      ArrayList<ITextComponent> components = ChatComponents.getComponents(chat);
       while (!components.isEmpty())
       {
-        IChatComponent head = components.remove(0);
+        ITextComponent head = components.remove(0);
         if (ChatComponents.hasEvents(head))
         {
           // Can't currently highlight links etc.
@@ -103,12 +102,12 @@ public class ChatHighlighter
         {
           // Collect all consecutive components that don't have events
           // and therefore can be highlighted.
-          ArrayList<IChatComponent> highlightableComps = new ArrayList<IChatComponent>();
+          ArrayList<ITextComponent> highlightableComps = new ArrayList<ITextComponent>();
           highlightableComps.add(head);
 
           while (!components.isEmpty())
           {
-            IChatComponent next = components.get(0);
+            ITextComponent next = components.get(0);
             if (ChatComponents.hasEvents(next))
             {
               break;
@@ -120,7 +119,7 @@ public class ChatHighlighter
             }
           } // while
 
-          IChatComponent highlightable = ChatComponents.toChatComponent(highlightableComps);
+          ITextComponent highlightable = ChatComponents.toChatComponent(highlightableComps);
           String highlightableText = highlightable.getFormattedText();
           Text highlighted = highlight(highlightableText);
           resultComponents.add(highlighted.toChatComponent());

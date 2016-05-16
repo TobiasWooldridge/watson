@@ -8,7 +8,7 @@ import static watson.analysis.PrismPatterns.PLACE_BREAK;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import watson.Controller;
 import watson.SyncTaskQueue;
 import watson.analysis.task.AddBlockEditTask;
@@ -77,7 +77,7 @@ public class PrismAnalysis extends Analysis
     addMatchedChatHandler(PLACE_BREAK, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         placeBreak(chat, m);
         return true;
@@ -86,7 +86,7 @@ public class PrismAnalysis extends Analysis
     addMatchedChatHandler(DATE_TIME_WORLD_COORDS, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         dateTimeWorldCoords(chat, m);
         return true;
@@ -95,7 +95,7 @@ public class PrismAnalysis extends Analysis
     addMatchedChatHandler(LOOKUP_DEFAULTS, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lookupDefaults(chat, m);
         return true;
@@ -104,7 +104,7 @@ public class PrismAnalysis extends Analysis
     addMatchedChatHandler(INSPECTOR_HEADER, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         inspectorHeader(chat, m);
         return true;
@@ -118,7 +118,7 @@ public class PrismAnalysis extends Analysis
    * block type and action.
    */
   @SuppressWarnings("unused")
-  void placeBreak(IChatComponent chat, Matcher m)
+  void placeBreak(ITextComponent chat, Matcher m)
   {
     _player = m.group(1);
     String blockAndCount = m.group(2);
@@ -169,7 +169,7 @@ public class PrismAnalysis extends Analysis
    * Parse date, time, world name and coords from Prism reports in chat.
    */
   @SuppressWarnings("unused")
-  void dateTimeWorldCoords(IChatComponent chat, Matcher m)
+  void dateTimeWorldCoords(ITextComponent chat, Matcher m)
   {
     if (_expectingDateTimeCoords)
     {
@@ -216,7 +216,7 @@ public class PrismAnalysis extends Analysis
    * lookup (/prism l) rather than inspector results (/prism i).
    */
   @SuppressWarnings("unused")
-  void lookupDefaults(IChatComponent chat, Matcher m)
+  void lookupDefaults(ITextComponent chat, Matcher m)
   {
     _inspectorResult = false;
   }
@@ -227,7 +227,7 @@ public class PrismAnalysis extends Analysis
    * inspector results (/prism i).
    */
   @SuppressWarnings("unused")
-  void inspectorHeader(IChatComponent chat, Matcher m)
+  void inspectorHeader(ITextComponent chat, Matcher m)
   {
     _inspectorResult = true;
     _awaitingFirstResult = true;

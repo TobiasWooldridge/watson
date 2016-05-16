@@ -1,10 +1,11 @@
 package watson.db;
 
+import com.mumfrey.liteloader.gl.GL;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.RenderManager;
 
 import org.lwjgl.opengl.GL11;
@@ -148,7 +149,7 @@ public class Annotation
     GlStateManager.enableBlend();
     GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
     Tessellator tessellator = Tessellator.getInstance();
-    WorldRenderer wr = tessellator.getWorldRenderer();
+    VertexBuffer vr = tessellator.getBuffer();
 
     int textWidth = fontRenderer.getStringWidth(text) >> 1;
     if (textWidth != 0)
@@ -158,12 +159,12 @@ public class Annotation
       GlStateManager.depthMask(false);
 
       // Draw background plate.
-      wr.startDrawingQuads();
-      wr.setColorRGBA_I(bgARGB & 0x00FFFFFF, (bgARGB >>> 24) & 0xFF);
-      wr.addVertex(-textWidth - 1, -6, 0.0);
-      wr.addVertex(-textWidth - 1, 4, 0.0);
-      wr.addVertex(textWidth + 1, 4, 0.0);
-      wr.addVertex(textWidth + 1, -6, 0.0);
+      vr.begin(GL.GL_QUADS, GL.VF_POSITION);
+      vr.tex(bgARGB & 0x00FFFFFF, (bgARGB >>> 24) & 0xFF);
+      vr.pos(-textWidth - 1, -6, 0.0);
+      vr.pos(-textWidth - 1, 4, 0.0);
+      vr.pos(textWidth + 1, 4, 0.0);
+      vr.pos(textWidth + 1, -6, 0.0);
       tessellator.draw();
 
       // Draw text.

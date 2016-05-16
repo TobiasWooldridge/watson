@@ -2,6 +2,7 @@ package watson.cli;
 
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.server.MinecraftServer;
 import watson.chat.Chat;
 import watson.chat.ChatHighlighter;
 
@@ -13,7 +14,7 @@ public class HighlightCommand extends WatsonCommandBase
 {
   // --------------------------------------------------------------------------
   /**
-   * @see net.minecraft.src.ICommand#getCommandName()
+   * @see net.minecraft.command.ICommand#getCommandName()
    */
   @Override
   public String getCommandName()
@@ -23,11 +24,12 @@ public class HighlightCommand extends WatsonCommandBase
 
   // --------------------------------------------------------------------------
   /**
-   * @see net.minecraft.src.ICommand#processCommand(net.minecraft.src.ICommandSender,
+   * @see net.minecraft.command.ICommand#execute(net.minecraft.server.MinecraftServer,
+   *      net.minecraft.command.ICommandSender,
    *      java.lang.String[])
    */
   @Override
-  public void processCommand(ICommandSender sender, String[] args) throws CommandException
+  public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
   {
     ChatHighlighter highlighter = Chat.getChatHighlighter();
     if (args.length == 0)

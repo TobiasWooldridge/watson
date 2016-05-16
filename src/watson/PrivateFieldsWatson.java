@@ -3,7 +3,7 @@ package watson;
 import com.mumfrey.liteloader.core.runtime.Obf;
 import com.mumfrey.liteloader.util.PrivateFields;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 
 // ----------------------------------------------------------------------------
 /**
@@ -27,8 +27,8 @@ public class PrivateFieldsWatson<P, T> extends PrivateFields<P, T>
 
   // --------------------------------------------------------------------------
 
-  public static final PrivateFieldsWatson<EnumChatFormatting, Character> formattingCode = new PrivateFieldsWatson<EnumChatFormatting, Character>(
-                                                                                          EnumChatFormatting.class,
+  public static final PrivateFieldsWatson<TextFormatting, Character> formattingCode = new PrivateFieldsWatson<TextFormatting, Character>(
+                                                                                          TextFormatting.class,
                                                                                           WatsonObf.EnumChatFormatting_formattingCode);
   public static final PrivateFieldsWatson<RenderManager, Double>         renderPosX     = new PrivateFieldsWatson<RenderManager, Double>(
                                                                                           RenderManager.class,

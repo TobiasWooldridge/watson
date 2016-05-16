@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import watson.chat.IChatHandler;
 import watson.chat.IMatchedChatHandler;
 
@@ -29,7 +29,7 @@ public class Analysis implements IChatHandler
    *         true if none were called. The chat is added to the client's chat
    *         GUI if true was returned.
    */
-  public boolean dispatchMatchedChat(IChatComponent chat)
+  public boolean dispatchMatchedChat(ITextComponent chat)
   {
     String unformatted = chat.getUnformattedText();
     for (Entry<Pattern, IMatchedChatHandler> entry : _handlers.entrySet())
@@ -58,10 +58,10 @@ public class Analysis implements IChatHandler
 
   // --------------------------------------------------------------------------
   /**
-   * @see watson.chat.IChatHandler#onChat(net.minecraft.util.IChatComponent)
+   * @see watson.chat.IChatHandler#onChat(net.minecraft.util.text.ITextComponent)
    */
   @Override
-  public boolean onChat(IChatComponent chat)
+  public boolean onChat(ITextComponent chat)
   {
     return dispatchMatchedChat(chat);
   } // onChat

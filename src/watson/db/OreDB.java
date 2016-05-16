@@ -2,6 +2,7 @@ package watson.db;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -558,7 +559,7 @@ public class OreDB
       // Reorder deposits by timestamp if required by the settings.
       if (config.timeOrderedDeposits())
       {
-        _oreDepositSequence.sort(new Comparator<OreDeposit>()
+        Collections.sort(_oreDepositSequence, new Comparator<OreDeposit>()
         {
           @Override
           public int compare(OreDeposit o1, OreDeposit o2)

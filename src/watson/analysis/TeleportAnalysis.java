@@ -4,7 +4,7 @@ import static watson.analysis.LogBlockPatterns.LB_TP;
 
 import java.util.regex.Matcher;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import watson.Controller;
 import watson.chat.IMatchedChatHandler;
 import watson.db.BlockEdit;
@@ -27,7 +27,7 @@ public class TeleportAnalysis extends Analysis
     addMatchedChatHandler(LB_TP, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lbTp(chat, m);
         return true;
@@ -41,7 +41,7 @@ public class TeleportAnalysis extends Analysis
    * corresponding edit so that /w pre works.
    */
   @SuppressWarnings("unused")
-  void lbTp(IChatComponent chat, Matcher m)
+  void lbTp(ITextComponent chat, Matcher m)
   {
     try
     {

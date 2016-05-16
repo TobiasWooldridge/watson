@@ -6,7 +6,7 @@ import static watson.analysis.LogBlockPatterns.LB_POSITION;
 
 import java.util.regex.Matcher;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import watson.Controller;
 import watson.SyncTaskQueue;
 import watson.analysis.task.AddBlockEditTask;
@@ -33,7 +33,7 @@ public class LbToolBlockAnalysis extends Analysis
     addMatchedChatHandler(LB_POSITION, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lbPosition(chat, m);
         return true;
@@ -42,7 +42,7 @@ public class LbToolBlockAnalysis extends Analysis
     addMatchedChatHandler(LB_EDIT, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lbEdit(chat, m);
         return true;
@@ -51,7 +51,7 @@ public class LbToolBlockAnalysis extends Analysis
     addMatchedChatHandler(LB_EDIT_REPLACED, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lbEditReplaced(chat, m);
         return true;
@@ -64,7 +64,7 @@ public class LbToolBlockAnalysis extends Analysis
    * Parse the result header when checking the logs for a single block using
    * coal ore.
    */
-  void lbPosition(@SuppressWarnings("unused") IChatComponent chat, Matcher m)
+  void lbPosition(@SuppressWarnings("unused") ITextComponent chat, Matcher m)
   {
     _x = Integer.parseInt(m.group(1));
     _y = Integer.parseInt(m.group(2));
@@ -80,7 +80,7 @@ public class LbToolBlockAnalysis extends Analysis
    * Parse "created" or "destroyed" result in the logs for a single block using
    * coal ore.
    */
-  void lbEdit(@SuppressWarnings("unused") IChatComponent chat, Matcher m)
+  void lbEdit(@SuppressWarnings("unused") ITextComponent chat, Matcher m)
   {
     if ((System.currentTimeMillis() - _lbPositionTime) < POSITION_TIMEOUT_MILLIS)
     {
@@ -102,7 +102,7 @@ public class LbToolBlockAnalysis extends Analysis
   /**
    * Parse results where the player replaced one block with another.
    */
-  void lbEditReplaced(@SuppressWarnings("unused") IChatComponent chat, Matcher m)
+  void lbEditReplaced(@SuppressWarnings("unused") ITextComponent chat, Matcher m)
   {
     if ((System.currentTimeMillis() - _lbPositionTime) < POSITION_TIMEOUT_MILLIS)
     {

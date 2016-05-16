@@ -3,10 +3,10 @@ package watson.chat;
 import java.util.logging.Level;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import watson.debug.Log;
 
 // ----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ public class Chat
    */
   public static void localChat(String message)
   {
-    localChat(new ChatComponentText(message));
+    localChat(new TextComponentString(message));
   }
 
   // --------------------------------------------------------------------------
@@ -77,26 +77,26 @@ public class Chat
    * @param colour the colour to format the text as.
    * @param message the text to display.
    */
-  public static void localChat(EnumChatFormatting colour, String message)
+  public static void localChat(TextFormatting colour, String message)
   {
-    ChatComponentText chat = new ChatComponentText(message);
-    ChatStyle style = new ChatStyle();
+    TextComponentString chat = new TextComponentString(message);
+    Style style = new Style();
     style.setColor(colour);
-    chat.setChatStyle(style);
+    chat.setStyle(style);
     localChat(chat);
   }
 
   // --------------------------------------------------------------------------
   /**
    * Display the chat locally.
-   * 
+   *
    * @param chat the chat component.
    */
-  public static void localChat(IChatComponent chat)
+  public static void localChat(ITextComponent chat)
   {
     if (isChatGuiReady())
     {
-      IChatComponent highlighted = getChatHighlighter().highlight(chat);
+      ITextComponent highlighted = getChatHighlighter().highlight(chat);
       Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(highlighted);
     }
   }
@@ -109,7 +109,7 @@ public class Chat
    */
   public static void localOutput(String message)
   {
-    localChat(EnumChatFormatting.AQUA, message);
+    localChat(TextFormatting.AQUA, message);
   }
 
   // --------------------------------------------------------------------------
@@ -120,7 +120,7 @@ public class Chat
    */
   public static void localError(String message)
   {
-    localChat(EnumChatFormatting.DARK_RED, message);
+    localChat(TextFormatting.DARK_RED, message);
   }
 
   // --------------------------------------------------------------------------

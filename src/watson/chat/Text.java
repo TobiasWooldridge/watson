@@ -3,10 +3,10 @@ package watson.chat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.ITextComponent;
 import watson.PrivateFieldsWatson;
 
 // ----------------------------------------------------------------------------
@@ -110,14 +110,14 @@ public class Text
    * 
    * @return the IChatComponent representation of the Text.
    */
-  public IChatComponent toChatComponent()
+  public ITextComponent toChatComponent()
   {
-    ArrayList<IChatComponent> result = new ArrayList<IChatComponent>();
+    ArrayList<ITextComponent> result = new ArrayList<ITextComponent>();
     StringBuilder text = new StringBuilder();
 
     // Sentinel:
     char colourStyle = Colour.white.getCode();
-    ChatStyle style = new ChatStyle();
+    Style style = new Style();
 
     for (int i = 0; i < _unformatted.length(); ++i)
     {
@@ -129,16 +129,16 @@ public class Text
         char colour = (char) (newColourStyle & Format.COLOUR_MASK);
 
         // Put all of the characters accumulated so far in ChatComponentText.
-        IChatComponent sibling = new ChatComponentText(text.toString());
-        sibling.setChatStyle(style);
+        ITextComponent sibling = new TextComponentString(text.toString());
+        sibling.setStyle(style);
         result.add(sibling);
 
         // Reuse StringBuilder to accumulate characters for the next sibling.
         text.setLength(0);
 
         // Configure the style of the next sibling to be appended to result.
-        style = new ChatStyle();
-        EnumChatFormatting chatFormatting = _TO_ENUM_CHAT_FORMATTING.get(colour);
+        style = new Style();
+        TextFormatting chatFormatting = _TO_ENUM_CHAT_FORMATTING.get(colour);
         style.setColor(chatFormatting);
         if ((newColourStyle & Format.BOLD) != 0)
         {
@@ -167,8 +167,8 @@ public class Text
       text.append(_unformatted.charAt(i));
     } // for
 
-    IChatComponent sibling = new ChatComponentText(text.toString());
-    sibling.setChatStyle(style);
+    ITextComponent sibling = new TextComponentString(text.toString());
+    sibling.setStyle(style);
     result.add(sibling);
     return ChatComponents.toChatComponent(result);
   } // toChatComponent
@@ -288,10 +288,10 @@ public class Text
    * Map from single character formatting code for a colour to the corresponding
    * EnumChatFormatting instance.
    */
-  protected static final HashMap<Character, EnumChatFormatting> _TO_ENUM_CHAT_FORMATTING = new HashMap<Character, EnumChatFormatting>();
+  protected static final HashMap<Character, TextFormatting> _TO_ENUM_CHAT_FORMATTING = new HashMap<Character, TextFormatting>();
   static
   {
-    for (EnumChatFormatting colour : EnumChatFormatting.values())
+    for (TextFormatting colour : TextFormatting.values())
     {
       _TO_ENUM_CHAT_FORMATTING.put(PrivateFieldsWatson.formattingCode.get(colour), colour);
     }

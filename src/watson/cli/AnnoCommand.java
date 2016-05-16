@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import net.minecraft.command.ICommandSender;
+import net.minecraft.server.MinecraftServer;
 import watson.Controller;
 import watson.db.Annotation;
 import watson.db.BlockEditSet;
@@ -17,7 +18,7 @@ public class AnnoCommand extends WatsonCommandBase
 {
   // --------------------------------------------------------------------------
   /**
-   * @see net.minecraft.src.ICommand#getCommandName()
+   * @see net.minecraft.command.ICommand#getCommandName()
    */
   @Override
   public String getCommandName()
@@ -27,11 +28,12 @@ public class AnnoCommand extends WatsonCommandBase
 
   // --------------------------------------------------------------------------
   /**
-   * @see net.minecraft.src.ICommand#processCommand(net.minecraft.src.ICommandSender,
+   * @see net.minecraft.command.ICommand#execute(net.minecraft.server.MinecraftServer,
+   *      net.minecraft.command.ICommandSender,
    *      java.lang.String[])
    */
   @Override
-  public void processCommand(ICommandSender sender, String[] args)
+  public void execute(MinecraftServer server, ICommandSender sender, String[] args)
   {
     if (args.length == 0)
     {

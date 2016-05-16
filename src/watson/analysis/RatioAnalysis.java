@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.regex.Matcher;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import watson.chat.Chat;
 import watson.chat.IMatchedChatHandler;
 import watson.db.TimeStamp;
@@ -42,7 +42,7 @@ public class RatioAnalysis extends Analysis
     addMatchedChatHandler(LB_HEADER_RATIO, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lbHeaderRatio(chat, m);
         return true;
@@ -51,7 +51,7 @@ public class RatioAnalysis extends Analysis
     addMatchedChatHandler(LB_HEADER_RATIO_CURRENT, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lbHeaderRatioCurrent(chat, m);
         return true;
@@ -61,7 +61,7 @@ public class RatioAnalysis extends Analysis
     IMatchedChatHandler headerHandler = new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lbHeader(chat, m);
         return true;
@@ -78,7 +78,7 @@ public class RatioAnalysis extends Analysis
     addMatchedChatHandler(LB_SUM, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         return lbSum(chat, m);
       }
@@ -93,7 +93,7 @@ public class RatioAnalysis extends Analysis
    * until we see an lb.header.ratio line.
    */
   @SuppressWarnings("unused")
-  void lbHeader(IChatComponent chat, Matcher m)
+  void lbHeader(ITextComponent chat, Matcher m)
   {
     reset();
   }
@@ -103,7 +103,7 @@ public class RatioAnalysis extends Analysis
    * Parse lines matching LogBlockPatterns.LB_HEADER_RATIO.
    */
   @SuppressWarnings("unused")
-  void lbHeaderRatio(IChatComponent chat, Matcher m)
+  void lbHeaderRatio(ITextComponent chat, Matcher m)
   {
     reset();
     _parsing = true;
@@ -116,7 +116,7 @@ public class RatioAnalysis extends Analysis
    * Parse lines matching LogBlockPatterns.LB_HEADER_RATIO_CURRENT.
    */
   @SuppressWarnings("unused")
-  void lbHeaderRatioCurrent(IChatComponent chat, Matcher m)
+  void lbHeaderRatioCurrent(ITextComponent chat, Matcher m)
   {
     reset();
     _parsing = true;
@@ -129,7 +129,7 @@ public class RatioAnalysis extends Analysis
    * Parse lines containing sums of creations and destructions of stone and
    * diamond.
    */
-  boolean lbSum(IChatComponent chat, Matcher m)
+  boolean lbSum(ITextComponent chat, Matcher m)
   {
     if (_parsing)
     {

@@ -5,10 +5,11 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+import com.mumfrey.liteloader.gl.GL;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.util.Vec3;
+import net.minecraft.client.renderer.VertexBuffer;
 
+import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
 import watson.Controller;
@@ -180,16 +181,16 @@ public class PlayerEditSet
     if (settings.areVectorsShown() && isVisible() && !_edits.isEmpty())
     {
       final Tessellator tess = Tessellator.getInstance();
-      final WorldRenderer wr = tess.getWorldRenderer();
-      wr.startDrawing(GL11.GL_LINES);
+      final VertexBuffer vr = tess.getBuffer();
+      vr.begin(GL.GL_LINES, GL.VF_POSITION);
 
       // TODO: Make the vector colour and thickness configurable.
-      wr.setColorRGBA_I(colour.getRGB(), colour.getAlpha());
+      vr.tex(colour.getRGB(), colour.getAlpha());
       GL11.glLineWidth(0.5f);
 
       // Unit X and Y vectors used for cross products to get arrow axes.
-      Vec3 unitX = new Vec3(1, 0, 0);
-      Vec3 unitY = new Vec3(0, 1, 0);
+      Vec3d unitX = new Vec3d(1, 0, 0);
+      Vec3d unitY = new Vec3d(0, 1, 0);
 
       // We only need to draw vectors if there are at least 2 edits.
       Iterator<BlockEdit> it = _edits.iterator();
@@ -205,10 +206,10 @@ public class PlayerEditSet
                          (!next.creation && settings.isLinkedDestructions());
           if (show)
           {
-            Vec3 pPos = new Vec3(0.5 + prev.x, 0.5 + prev.y, 0.5 + prev.z);
-            Vec3 nPos = new Vec3(0.5 + next.x, 0.5 + next.y, 0.5 + next.z);
+            Vec3d pPos = new Vec3d(0.5 + prev.x, 0.5 + prev.y, 0.5 + prev.z);
+            Vec3d nPos = new Vec3d(0.5 + next.x, 0.5 + next.y, 0.5 + next.z);
             // Vector difference, from prev to next.
-            Vec3 diff = nPos.subtract(pPos);
+            Vec3d diff = nPos.subtract(pPos);
 
             // Compute length. We want to scale the arrow heads by the length,
             // so can't avoid the sqrt() here.
@@ -216,8 +217,8 @@ public class PlayerEditSet
             if (length >= settings.getMinVectorLength())
             {
               // Draw the vector.
-              wr.addVertex(pPos.xCoord, pPos.yCoord, pPos.zCoord);
-              wr.addVertex(nPos.xCoord, nPos.yCoord, nPos.zCoord);
+              vr.pos(pPos.xCoord, pPos.yCoord, pPos.zCoord);
+              vr.pos(nPos.xCoord, nPos.yCoord, nPos.zCoord);
 
               // Length from arrow tip to midpoint of vector as a fraction of
               // the total vector length. Scale the arrow in proportion to the
@@ -231,17 +232,17 @@ public class PlayerEditSet
 
               // Position of the tip and tail of the arrow, sitting in the
               // middle of the vector.
-              Vec3 tip = new Vec3(pPos.xCoord * (0.5 - arrowScale) + nPos.xCoord * (0.5 + arrowScale),
+              Vec3d tip = new Vec3d(pPos.xCoord * (0.5 - arrowScale) + nPos.xCoord * (0.5 + arrowScale),
                                   pPos.yCoord * (0.5 - arrowScale) + nPos.yCoord * (0.5 + arrowScale),
                                   pPos.zCoord * (0.5 - arrowScale) + nPos.zCoord * (0.5 + arrowScale));
-              Vec3 tail = new Vec3(pPos.xCoord * (0.5 + arrowScale) + nPos.xCoord * (0.5 - arrowScale),
+              Vec3d tail = new Vec3d(pPos.xCoord * (0.5 + arrowScale) + nPos.xCoord * (0.5 - arrowScale),
                                    pPos.yCoord * (0.5 + arrowScale) + nPos.yCoord * (0.5 - arrowScale),
                                    pPos.zCoord * (0.5 + arrowScale) + nPos.zCoord * (0.5 - arrowScale));
 
               // Fin axes, perpendicular to vector. Scale by vector length.
               // If the vector is colinear with the Y axis, use the X axis for
               // the cross products to derive the fin directions.
-              Vec3 fin1;
+              Vec3d fin1;
               if (Math.abs(unitY.dotProduct(diff)) > 0.9 * length)
               {
                 fin1 = unitX.crossProduct(diff).normalize();
@@ -251,24 +252,24 @@ public class PlayerEditSet
                 fin1 = unitY.crossProduct(diff).normalize();
               }
 
-              Vec3 fin2 = fin1.crossProduct(diff).normalize();
+              Vec3d fin2 = fin1.crossProduct(diff).normalize();
 
-              Vec3 draw1 = new Vec3(fin1.xCoord * arrowScale * length,
+              Vec3d draw1 = new Vec3d(fin1.xCoord * arrowScale * length,
                                     fin1.yCoord * arrowScale * length,
                                     fin1.zCoord * arrowScale * length);
-              Vec3 draw2 = new Vec3(fin2.xCoord * arrowScale * length,
+              Vec3d draw2 = new Vec3d(fin2.xCoord * arrowScale * length,
                                     fin2.yCoord * arrowScale * length,
                                     fin2.zCoord * arrowScale * length);
 
               // Draw four fins.
-              wr.addVertex(tip.xCoord, tip.yCoord, tip.zCoord);
-              wr.addVertex(tail.xCoord + draw1.xCoord, tail.yCoord + draw1.yCoord, tail.zCoord + draw1.zCoord);
-              wr.addVertex(tip.xCoord, tip.yCoord, tip.zCoord);
-              wr.addVertex(tail.xCoord - draw1.xCoord, tail.yCoord - draw1.yCoord, tail.zCoord - draw1.zCoord);
-              wr.addVertex(tip.xCoord, tip.yCoord, tip.zCoord);
-              wr.addVertex(tail.xCoord + draw2.xCoord, tail.yCoord + draw2.yCoord, tail.zCoord + draw2.zCoord);
-              wr.addVertex(tip.xCoord, tip.yCoord, tip.zCoord);
-              wr.addVertex(tail.xCoord - draw2.xCoord, tail.yCoord - draw2.yCoord, tail.zCoord - draw2.zCoord);
+              vr.pos(tip.xCoord, tip.yCoord, tip.zCoord);
+              vr.pos(tail.xCoord + draw1.xCoord, tail.yCoord + draw1.yCoord, tail.zCoord + draw1.zCoord);
+              vr.pos(tip.xCoord, tip.yCoord, tip.zCoord);
+              vr.pos(tail.xCoord - draw1.xCoord, tail.yCoord - draw1.yCoord, tail.zCoord - draw1.zCoord);
+              vr.pos(tip.xCoord, tip.yCoord, tip.zCoord);
+              vr.pos(tail.xCoord + draw2.xCoord, tail.yCoord + draw2.yCoord, tail.zCoord + draw2.zCoord);
+              vr.pos(tip.xCoord, tip.yCoord, tip.zCoord);
+              vr.pos(tail.xCoord - draw2.xCoord, tail.yCoord - draw2.yCoord, tail.zCoord - draw2.zCoord);
             } // if we are drawing this vector
             prev = next;
           } // if

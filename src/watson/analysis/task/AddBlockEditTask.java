@@ -14,7 +14,7 @@ public class AddBlockEditTask implements Runnable
    * Constructor.
    * 
    * @param edit the edit to add when the task is run.
-   * @param true if true, the state variables signifying the selected edit are
+   * @param updateVariables if true, the state variables signifying the selected edit are
    *        updated.
    */
   public AddBlockEditTask(BlockEdit edit, boolean updateVariables)

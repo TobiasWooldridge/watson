@@ -7,7 +7,7 @@ import static watson.analysis.MiscPatterns.MODMODE_ENABLE;
 
 import java.util.regex.Matcher;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import watson.Controller;
 import watson.chat.IMatchedChatHandler;
 
@@ -28,7 +28,7 @@ public class ModModeAnalysis extends Analysis
     IMatchedChatHandler modmodeHandler = new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         changeModMode(chat, m);
         return true;
@@ -41,7 +41,7 @@ public class ModModeAnalysis extends Analysis
     IMatchedChatHandler dutiesHandler = new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         changeDutyMode(chat, m);
         return true;
@@ -58,7 +58,7 @@ public class ModModeAnalysis extends Analysis
    * assigned the "mod.entermodmode" or "mod.leavemodmode" category.
    */
   @SuppressWarnings("unused")
-  void changeModMode(IChatComponent chat, Matcher m)
+  void changeModMode(ITextComponent chat, Matcher m)
   {
     Controller.instance.getDisplaySettings().setDisplayed(m.pattern() == MODMODE_ENABLE);
   }
@@ -69,7 +69,7 @@ public class ModModeAnalysis extends Analysis
    * assigned the "mod.enabledutymode" or "mod.disabledutymode" category.
    */
   @SuppressWarnings("unused")
-  void changeDutyMode(IChatComponent chat, Matcher m)
+  void changeDutyMode(ITextComponent chat, Matcher m)
   {
     Controller.instance.getDisplaySettings().setDisplayed(m.pattern() == DUTYMODE_ENABLE);
   }

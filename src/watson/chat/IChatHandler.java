@@ -1,6 +1,6 @@
 package watson.chat;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 
 // ----------------------------------------------------------------------------
 /**
@@ -17,5 +17,5 @@ public interface IChatHandler
    * @return true if the chat should be echoed in the client chat GUI; false if
    *         it should be filtered out.
    */
-  public boolean onChat(IChatComponent chat);
+  public boolean onChat(ITextComponent chat);
 }

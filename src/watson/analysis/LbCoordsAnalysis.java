@@ -19,7 +19,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import watson.Configuration;
 import watson.Controller;
 import watson.SyncTaskQueue;
@@ -50,7 +50,7 @@ public class LbCoordsAnalysis extends Analysis
     addMatchedChatHandler(LB_COORD, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lbCoord(chat, m);
         // Don't echo in GUI.
@@ -60,7 +60,7 @@ public class LbCoordsAnalysis extends Analysis
     addMatchedChatHandler(LB_COORD_KILLS, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lbCoordKills(chat, m);
         // Don't echo in GUI.
@@ -70,7 +70,7 @@ public class LbCoordsAnalysis extends Analysis
     addMatchedChatHandler(LB_COORD_REPLACED, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lbCoordReplaced(chat, m);
         // Don't echo in GUI.
@@ -80,7 +80,7 @@ public class LbCoordsAnalysis extends Analysis
     addMatchedChatHandler(LB_PAGE, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lbPage(chat, m);
         return true;
@@ -90,7 +90,7 @@ public class LbCoordsAnalysis extends Analysis
     IMatchedChatHandler headerHandler = new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lbHeader(chat, m);
         return true;
@@ -113,7 +113,7 @@ public class LbCoordsAnalysis extends Analysis
   /**
    * Parse creation and destruction coords results.
    */
-  void lbCoord(IChatComponent chat, Matcher m)
+  void lbCoord(ITextComponent chat, Matcher m)
   {
     try
     {
@@ -187,7 +187,7 @@ public class LbCoordsAnalysis extends Analysis
         // No reformatting of query results. Recolour?
         if (Configuration.instance.getRecolourQueryResults())
         {
-          Chat.localChat(ChatComponents.getEnumChatFormatting(colourCode), chat.getUnformattedText());
+          Chat.localChat(ChatComponents.getTextFormatting(colourCode), chat.getUnformattedText());
         }
         else
         {
@@ -207,7 +207,7 @@ public class LbCoordsAnalysis extends Analysis
   /**
    * Parse kill coords results.
    */
-  void lbCoordKills(IChatComponent chat, Matcher m)
+  void lbCoordKills(ITextComponent chat, Matcher m)
   {
     try
     {
@@ -267,7 +267,7 @@ public class LbCoordsAnalysis extends Analysis
         // No reformatting of query results. Recolour?
         if (Configuration.instance.getRecolourQueryResults())
         {
-          Chat.localChat(ChatComponents.getEnumChatFormatting(colourCode), chat.getUnformattedText());
+          Chat.localChat(ChatComponents.getTextFormatting(colourCode), chat.getUnformattedText());
         }
         else
         {
@@ -288,7 +288,7 @@ public class LbCoordsAnalysis extends Analysis
    * Parse /lb coords results where the edit was replacement of one block with
    * another.
    */
-  void lbCoordReplaced(IChatComponent chat, Matcher m)
+  void lbCoordReplaced(ITextComponent chat, Matcher m)
   {
     try
     {
@@ -335,7 +335,7 @@ public class LbCoordsAnalysis extends Analysis
         // No reformatting of query results. Recolour?
         if (Configuration.instance.getRecolourQueryResults())
         {
-          Chat.localChat(ChatComponents.getEnumChatFormatting(colourCode), chat.getUnformattedText());
+          Chat.localChat(ChatComponents.getTextFormatting(colourCode), chat.getUnformattedText());
         }
         else
         {
@@ -359,7 +359,7 @@ public class LbCoordsAnalysis extends Analysis
    * configuration setting.
    */
   @SuppressWarnings("unused")
-  void lbPage(IChatComponent chat, Matcher m)
+  void lbPage(ITextComponent chat, Matcher m)
   {
     int currentPage = Integer.parseInt(m.group(1));
     int pageCount = Integer.parseInt(m.group(2));
@@ -386,7 +386,7 @@ public class LbCoordsAnalysis extends Analysis
    * we look for the various headers in /lb results and clear the counters.
    */
   @SuppressWarnings("unused")
-  void lbHeader(IChatComponent chat, Matcher m)
+  void lbHeader(ITextComponent chat, Matcher m)
   {
     _currentPage = _pageCount = 0;
   }

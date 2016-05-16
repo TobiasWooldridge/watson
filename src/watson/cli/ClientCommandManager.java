@@ -17,10 +17,10 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import watson.debug.Log;
 
 // ----------------------------------------------------------------------------
@@ -64,7 +64,7 @@ public class ClientCommandManager implements ICommandManager
     {
       return false;
     }
-    ICommand command = getCommand(tokens[0]);
+    ICommand command = getCommand(tokens[0].toLowerCase());
     if (command != null)
     {
       executeCommand(getCommandSender(), commandLine);
@@ -120,7 +120,7 @@ public class ClientCommandManager implements ICommandManager
   /**
    * Return the command with the specified name, or null if there is no such
    * command.
-   * 
+   *
    * @return the command with the specified name, or null if there is no such
    *         command.
    */
@@ -131,12 +131,11 @@ public class ClientCommandManager implements ICommandManager
 
   // --------------------------------------------------------------------------
   /**
-   * @see net.minecraft.src.ICommandManager#executeCommand(net.minecraft.src.ICommandSender,
-   *      java.lang.String)
-   * 
+   * @see net.minecraft.command.ICommandManager#executeCommand(ICommandSender, String)
+   *
    *      The JavaDocs for the interface don't currently describe the exact
    *      meaning of the return value. Looking at the code for
-   *      {@link net.minecraft.src.CommandHandler} it contains a loop that
+   *      {@link net.minecraft.command.CommandHandler} it contains a loop that
    *      applies a command for all players who match a particular name pattern.
    *      The returned value is the number of times that the command was
    *      successfully executed by that loop. Therefore in the case of this
@@ -155,29 +154,29 @@ public class ClientCommandManager implements ICommandManager
         throw new CommandNotFoundException();
       }
       tokens = Arrays.copyOfRange(tokens, 1, tokens.length);
-      if (command.canCommandSenderUseCommand(sender))
+      if (command.checkPermission(sender.getServer(), sender))
       {
-        command.processCommand(sender, tokens);
+        command.execute(sender.getServer(), sender, tokens);
         return 1;
       }
       else
       {
-        sendError(sender, new ChatComponentTranslation("commands.generic.permission", new Object[0]));
+        sendError(sender, new TextComponentTranslation("commands.generic.permission", new Object[0]));
       }
     }
     catch (WrongUsageException ex)
     {
       sendError(sender,
-        new ChatComponentTranslation("commands.generic.usage",
-                                     new Object[]{new ChatComponentTranslation(ex.getMessage(), ex.getErrorObjects())}));
+        new TextComponentTranslation("commands.generic.usage",
+                                     new Object[]{new TextComponentTranslation(ex.getMessage(), ex.getErrorObjects())}));
     }
     catch (CommandException ex)
     {
-      sendError(sender, new ChatComponentTranslation(ex.getMessage(), ex.getErrorObjects()));
+      sendError(sender, new TextComponentTranslation(ex.getMessage(), ex.getErrorObjects()));
     }
     catch (Throwable throwable)
     {
-      sendError(sender, new ChatComponentTranslation("commands.generic.exception", new Object[0]));
+      sendError(sender, new TextComponentTranslation("commands.generic.exception", new Object[0]));
       Log.exception(Level.WARNING, "error processing command", throwable);
     }
 
@@ -186,8 +185,7 @@ public class ClientCommandManager implements ICommandManager
 
   // --------------------------------------------------------------------------
   /**
-   * @see net.minecraft.src.ICommandManager#getPossibleCommands(net.minecraft.src.ICommandSender,
-   *      java.lang.String)
+   * @see net.minecraft.command.ICommandManager#getPossibleCommands(net.minecraft.command.ICommandSender)
    */
   @Override
   public List<String> getTabCompletionOptions(ICommandSender var1, String prefix, BlockPos pos)
@@ -208,7 +206,7 @@ public class ClientCommandManager implements ICommandManager
    * The local client is assumed to be able to use any commands that have been
    * registered with mod_CLI.
    * 
-   * @see net.minecraft.src.ICommandManager#getPossibleCommands(net.minecraft.src.ICommandSender)
+   * @see net.minecraft.command.ICommandManager#getPossibleCommands(net.minecraft.command.ICommandSender)
    */
   @Override
   public List<ICommand> getPossibleCommands(ICommandSender var1)
@@ -218,7 +216,7 @@ public class ClientCommandManager implements ICommandManager
 
   // --------------------------------------------------------------------------
   /**
-   * @see net.minecraft.src.ICommandManager#getCommands()
+   * @see net.minecraft.command.ICommandManager#getCommands()
    */
   @Override
   public Map<String, ICommand> getCommands()
@@ -298,9 +296,9 @@ public class ClientCommandManager implements ICommandManager
    * @param sender the player executing the command.
    * @param chat the error message.
    */
-  static void sendError(ICommandSender sender, IChatComponent chat)
+  static void sendError(ICommandSender sender, ITextComponent chat)
   {
-    chat.getChatStyle().setColor(EnumChatFormatting.RED);
+    chat.getStyle().setColor(TextFormatting.RED);
     sender.addChatMessage(chat);
   }
 

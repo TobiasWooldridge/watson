@@ -5,12 +5,13 @@ import java.util.regex.Pattern;
 
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.event.ClickEvent;
-import net.minecraft.event.ClickEvent.Action;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.event.ClickEvent.Action;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import watson.Configuration;
 import watson.Controller;
 import watson.DisplaySettings;
@@ -26,7 +27,7 @@ public class WatsonCommand extends WatsonCommandBase
 {
   // --------------------------------------------------------------------------
   /**
-   * @see net.minecraft.src.ICommand#getCommandName()
+   * @see net.minecraft.command.ICommand#getCommandName()
    */
   @Override
   public String getCommandName()
@@ -36,11 +37,12 @@ public class WatsonCommand extends WatsonCommandBase
 
   // --------------------------------------------------------------------------
   /**
-   * @see net.minecraft.src.ICommand#processCommand(net.minecraft.src.ICommandSender,
+   * @see net.minecraft.command.ICommand#execute(net.minecraft.server.MinecraftServer,
+   *      net.minecraft.command.ICommandSender,
    *      java.lang.String[])
    */
   @Override
-  public void processCommand(ICommandSender sender, String[] args)
+  public void execute(MinecraftServer server, ICommandSender sender, String[] args)
   {
     DisplaySettings display = Controller.instance.getDisplaySettings();
     if (args.length == 0)
@@ -664,7 +666,7 @@ public class WatsonCommand extends WatsonCommandBase
       else if (args.length == 2)
       {
         int argb = Configuration.instance.getBillboardBackground();
-        localOutput(sender, "Billboard background colour is currently set to #" + Integer.toUnsignedString(argb, 16) + ".");
+        localOutput(sender, "Billboard background colour is currently set to #" + Integer.valueOf(String.valueOf(argb), 16) + ".");
         return true;
       }
     } // /w config billboard_background
@@ -691,7 +693,7 @@ public class WatsonCommand extends WatsonCommandBase
       else if (args.length == 2)
       {
         int argb = Configuration.instance.getBillboardForeground();
-        localOutput(sender, "Billboard foreground colour is currently set to #" + Integer.toUnsignedString(argb, 16) + ".");
+        localOutput(sender, "Billboard foreground colour is currently set to #" + Integer.valueOf(String.valueOf(argb), 16) + ".");
         return true;
       }
     } // /w config billboard_foreground
@@ -1148,15 +1150,15 @@ public class WatsonCommand extends WatsonCommandBase
     localOutput(sender, "  /anno help");
 
     // Make the documentation link clickable.
-    IChatComponent docs = new ChatComponentText("Documentation: ");
-    ChatStyle style = new ChatStyle().setColor(EnumChatFormatting.AQUA);
-    docs.setChatStyle(style);
+    ITextComponent docs = new TextComponentString("Documentation: ");
+    Style style = new Style().setColor(TextFormatting.AQUA);
+    docs.setStyle(style);
     String url = "http://github.com/totemo/watson";
-    IChatComponent link = new ChatComponentText(url);
-    ChatStyle linkStyle = new ChatStyle();
+    ITextComponent link = new TextComponentString(url);
+    Style linkStyle = new Style();
     linkStyle.setUnderlined(true);
-    link.setChatStyle(linkStyle);
-    linkStyle.setChatClickEvent(new ClickEvent(Action.OPEN_URL, url));
+    link.setStyle(linkStyle);
+    linkStyle.setClickEvent(new ClickEvent(Action.OPEN_URL, url));
     docs.appendSibling(link);
     sender.addChatMessage(docs);
 

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.regex.Matcher;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import watson.Controller;
 import watson.chat.Chat;
 import watson.chat.IMatchedChatHandler;
@@ -111,7 +111,7 @@ public class ServerTime extends Analysis
     addMatchedChatHandler(LB_HEADER_TIME_CHECK, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lbHeaderTimeCheck(chat, m);
         // Don't echo time check result header in GUI.
@@ -121,7 +121,7 @@ public class ServerTime extends Analysis
     addMatchedChatHandler(LB_HEADER_NO_RESULTS, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         // Called method controls whether chat is echoed.
         return lbHeaderNoResults(chat, m);
@@ -134,7 +134,7 @@ public class ServerTime extends Analysis
    * Handle the results of the time checking query.
    */
   @SuppressWarnings("unused")
-  void lbHeaderTimeCheck(IChatComponent chat, Matcher m)
+  void lbHeaderTimeCheck(ITextComponent chat, Matcher m)
   {
     String serverIP = Controller.instance.getServerIP();
     if (serverIP != null && _localMinusServerMinutes.get(serverIP) == null)
@@ -174,7 +174,7 @@ public class ServerTime extends Analysis
    * GUI when it was triggered by the time checking query, only.
    */
   @SuppressWarnings("unused")
-  boolean lbHeaderNoResults(IChatComponent chat, Matcher m)
+  boolean lbHeaderNoResults(ITextComponent chat, Matcher m)
   {
     boolean echo = _echoNextNoResults;
     _echoNextNoResults = true;

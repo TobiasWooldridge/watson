@@ -9,10 +9,10 @@ import java.util.Date;
 
 import javax.imageio.ImageIO;
 
-import net.minecraft.event.ClickEvent;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.event.ClickEvent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.ITextComponent;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -31,7 +31,7 @@ public class Screenshot
    * @param width the screen width.
    * @param height the screen height.
    */
-  public static IChatComponent save(File file, int width, int height)
+  public static ITextComponent save(File file, int width, int height)
   {
     try
     {
@@ -57,14 +57,14 @@ public class Screenshot
       }
 
       ImageIO.write(image, "png", file);
-      ChatComponentText text = new ChatComponentText(file.getName());
-      text.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath()));
-      text.getChatStyle().setUnderlined(Boolean.valueOf(true));
-      return new ChatComponentTranslation("screenshot.success", new Object[]{text});
+      TextComponentString text = new TextComponentString(file.getName());
+      text.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_FILE, file.getAbsolutePath()));
+      text.getStyle().setUnderlined(Boolean.valueOf(true));
+      return new TextComponentTranslation("screenshot.success", new Object[]{text});
     }
     catch (Exception ex)
     {
-      return new ChatComponentTranslation("screenshot.failure", new Object[]{ex.getMessage()});
+      return new TextComponentTranslation("screenshot.failure", new Object[]{ex.getMessage()});
     }
   }
 

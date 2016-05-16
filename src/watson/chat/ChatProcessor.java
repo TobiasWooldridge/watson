@@ -2,7 +2,7 @@ package watson.chat;
 
 import java.util.ArrayList;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import watson.Configuration;
 import watson.analysis.LbToolBlockAnalysis;
 import watson.analysis.CoreProtectAnalysis;
@@ -52,7 +52,7 @@ public class ChatProcessor
    * @return true if the chat should be echoed in the client chat GUI; false if
    *         it should be filtered out.
    */
-  public boolean onChat(IChatComponent chat)
+  public boolean onChat(ITextComponent chat)
   {
     if (Configuration.instance.isEnabled())
     {

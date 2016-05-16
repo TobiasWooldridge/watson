@@ -2,9 +2,9 @@ package watson.cli;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 
 // ----------------------------------------------------------------------------
 /**
@@ -48,7 +48,7 @@ public abstract class WatsonCommandBase extends CommandBase
    */
   public void localOutput(ICommandSender sender, String message)
   {
-    sendColouredText(sender, EnumChatFormatting.AQUA, message);
+    sendColouredText(sender, TextFormatting.AQUA, message);
   }
 
   // --------------------------------------------------------------------------
@@ -59,7 +59,7 @@ public abstract class WatsonCommandBase extends CommandBase
    */
   public void localError(ICommandSender sender, String message)
   {
-    sendColouredText(sender, EnumChatFormatting.DARK_RED, message);
+    sendColouredText(sender, TextFormatting.DARK_RED, message);
   }
 
   // --------------------------------------------------------------------------
@@ -70,12 +70,12 @@ public abstract class WatsonCommandBase extends CommandBase
    * @param colour the colour.
    * @param message the text.
    */
-  public void sendColouredText(ICommandSender sender, EnumChatFormatting colour, String message)
+  public void sendColouredText(ICommandSender sender, TextFormatting colour, String message)
   {
-    ChatComponentText chat = new ChatComponentText(message);
-    ChatStyle style = new ChatStyle();
+    TextComponentString chat = new TextComponentString(message);
+    Style style = new Style();
     style.setColor(colour);
-    chat.setChatStyle(style);
+    chat.setStyle(style);
     sender.addChatMessage(chat);
   }
 

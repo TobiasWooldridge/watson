@@ -8,7 +8,7 @@ import static watson.analysis.CoreProtectPatterns.LOOKUP_HEADER;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import watson.Controller;
 import watson.SyncTaskQueue;
 import watson.analysis.task.AddBlockEditTask;
@@ -52,7 +52,7 @@ public class CoreProtectAnalysis extends Analysis
     addMatchedChatHandler(INSPECTOR_COORDS, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         inspectorCoords(chat, m);
         return true;
@@ -61,7 +61,7 @@ public class CoreProtectAnalysis extends Analysis
     addMatchedChatHandler(DETAILS, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         details(chat, m);
         return true;
@@ -70,7 +70,7 @@ public class CoreProtectAnalysis extends Analysis
     addMatchedChatHandler(LOOKUP_COORDS, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lookupCoords(chat, m);
         return true;
@@ -79,7 +79,7 @@ public class CoreProtectAnalysis extends Analysis
     addMatchedChatHandler(LOOKUP_HEADER, new IMatchedChatHandler()
     {
       @Override
-      public boolean onMatchedChat(IChatComponent chat, Matcher m)
+      public boolean onMatchedChat(ITextComponent chat, Matcher m)
       {
         lookupHeader(chat, m);
         return true;
@@ -93,7 +93,7 @@ public class CoreProtectAnalysis extends Analysis
    * inspector coordinates line.
    */
   @SuppressWarnings("unused")
-  void inspectorCoords(IChatComponent chat, Matcher m)
+  void inspectorCoords(ITextComponent chat, Matcher m)
   {
     _isLookup = false;
     _x = Integer.parseInt(m.group(1));
@@ -109,7 +109,7 @@ public class CoreProtectAnalysis extends Analysis
    * inspector or lookup details line.
    */
   @SuppressWarnings("unused")
-  void details(IChatComponent chat, Matcher m)
+  void details(ITextComponent chat, Matcher m)
   {
     _lookupDetails = false;
     if (m.group(3).equals("placed") || m.group(3).equals("removed"))
@@ -163,7 +163,7 @@ public class CoreProtectAnalysis extends Analysis
    * lookup header line.
    */
   @SuppressWarnings("unused")
-  void lookupHeader(IChatComponent chat, Matcher m)
+  void lookupHeader(ITextComponent chat, Matcher m)
   {
     _isLookup = true;
   }
@@ -174,7 +174,7 @@ public class CoreProtectAnalysis extends Analysis
    * lookup coordinates line.
    */
   @SuppressWarnings("unused")
-  void lookupCoords(IChatComponent chat, Matcher m)
+  void lookupCoords(ITextComponent chat, Matcher m)
   {
     _isLookup = true;
     if (_lookupDetails)

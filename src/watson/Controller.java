@@ -16,10 +16,11 @@ import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.mumfrey.liteloader.gl.GL;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 
 import org.lwjgl.opengl.GL11;
 
@@ -713,21 +714,21 @@ public class Controller
     if (_selection != null && getDisplaySettings().isSelectionShown())
     {
       Tessellator tess = Tessellator.getInstance();
-      WorldRenderer wr = tess.getWorldRenderer();
-      wr.startDrawing(GL11.GL_LINES);
-      wr.setColorRGBA(255, 0, 255, 128);
+      VertexBuffer vr = tess.getBuffer();
+      vr.begin(GL.GL_LINES, GL.VF_POSITION);
+      vr.color(255, 0, 255, 128);
       GL11.glLineWidth(4.0f);
 
       final float halfSize = 0.3f;
       float x = _selection.x + 0.5f;
       float y = _selection.y + 0.5f;
       float z = _selection.z + 0.5f;
-      wr.addVertex(x - halfSize, y, z);
-      wr.addVertex(x + halfSize, y, z);
-      wr.addVertex(x, y - halfSize, z);
-      wr.addVertex(x, y + halfSize, z);
-      wr.addVertex(x, y, z - halfSize);
-      wr.addVertex(x, y, z + halfSize);
+      vr.pos(x - halfSize, y, z);
+      vr.pos(x + halfSize, y, z);
+      vr.pos(x, y - halfSize, z);
+      vr.pos(x, y + halfSize, z);
+      vr.pos(x, y, z - halfSize);
+      vr.pos(x, y, z + halfSize);
       tess.draw();
 
       if (_selection.playerEditSet != null)
@@ -736,13 +737,13 @@ public class Controller
         BlockEdit predecessor = _selection.playerEditSet.getEditBefore(_selection);
         if (predecessor != null)
         {
-          wr.startDrawing(GL11.GL_LINES);
-          wr.setColorRGBA(255, 0, 255, 128);
+          vr.begin(GL.GL_LINES, GL.VF_POSITION);
+          vr.color(255, 0, 255, 128);
           GL11.glEnable(GL11.GL_LINE_STIPPLE);
           GL11.glLineStipple(8, (short) 0xAAAA);
           GL11.glLineWidth(3.0f);
-          wr.addVertex(predecessor.x + 0.5f, predecessor.y + 0.5f, predecessor.z + 0.5f);
-          wr.addVertex(x, y, z);
+          vr.pos(predecessor.x + 0.5f, predecessor.y + 0.5f, predecessor.z + 0.5f);
+          vr.pos(x, y, z);
           tess.draw();
           GL11.glDisable(GL11.GL_LINE_STIPPLE);
         }

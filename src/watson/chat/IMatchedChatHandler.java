@@ -2,7 +2,7 @@ package watson.chat;
 
 import java.util.regex.Matcher;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 
 // ----------------------------------------------------------------------------
 /**
@@ -19,5 +19,5 @@ public interface IMatchedChatHandler
    * @return true if the chat should be echoed in the client GUI; false if it
    *         should be filtered out.
    */
-  public boolean onMatchedChat(IChatComponent chat, Matcher m);
+  public boolean onMatchedChat(ITextComponent chat, Matcher m);
 }
