@@ -42,12 +42,12 @@ public class AnnoCommand extends WatsonCommandBase
     }
     else if (args.length == 1)
     {
-      if (args[0].equals("help"))
+      if (args[0].equalsIgnoreCase("help"))
       {
         help(sender);
         return;
       }
-      else if (args[0].equals("list"))
+      else if (args[0].equalsIgnoreCase("list"))
       {
         BlockEditSet edits = Controller.instance.getBlockEditSet();
         ArrayList<Annotation> annotations = edits.getAnnotations();
@@ -65,7 +65,7 @@ public class AnnoCommand extends WatsonCommandBase
         }
         return;
       }
-      else if (args[0].equals("clear"))
+      else if (args[0].equalsIgnoreCase("clear"))
       {
         BlockEditSet edits = Controller.instance.getBlockEditSet();
         ArrayList<Annotation> annotations = edits.getAnnotations();
@@ -79,7 +79,7 @@ public class AnnoCommand extends WatsonCommandBase
     }
     else if (args.length >= 2)
     {
-      if (args[0].equals("tp"))
+      if (args[0].equalsIgnoreCase("tp"))
       {
         if (args.length == 2)
         {
@@ -100,7 +100,7 @@ public class AnnoCommand extends WatsonCommandBase
           return;
         }
       }
-      else if (args[0].equals("remove"))
+      else if (args[0].equalsIgnoreCase("remove"))
       {
         if (args.length == 2)
         {
@@ -121,7 +121,7 @@ public class AnnoCommand extends WatsonCommandBase
           return;
         }
       }
-      else if (args[0].equals("add"))
+      else if (args[0].equalsIgnoreCase("add"))
       {
         HashMap<String, Object> vars = Controller.instance.getVariables();
         Integer x = (Integer) vars.get("x");

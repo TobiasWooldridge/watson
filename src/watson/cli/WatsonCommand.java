@@ -52,22 +52,22 @@ public class WatsonCommand extends WatsonCommandBase
     }
     else if (args.length == 1)
     {
-      if (args[0].equals("help"))
+      if (args[0].equalsIgnoreCase("help"))
       {
         help(sender);
         return;
       }
-      else if (args[0].equals("clear"))
+      else if (args[0].equalsIgnoreCase("clear"))
       {
         Controller.instance.clearBlockEditSet();
         return;
       }
-      else if (args[0].equals("ratio"))
+      else if (args[0].equalsIgnoreCase("ratio"))
       {
         Controller.instance.getBlockEditSet().getOreDB().showRatios();
         return;
       }
-      else if (args[0].equals("servertime"))
+      else if (args[0].equalsIgnoreCase("servertime"))
       {
         ServerTime.instance.queryServerTime(true);
         return;
@@ -75,7 +75,7 @@ public class WatsonCommand extends WatsonCommandBase
     }
 
     // "/w ore [<page>]"
-    if (args.length >= 1 && args[0].equals("ore"))
+    if (args.length >= 1 && args[0].equalsIgnoreCase("ore"))
     {
       if (args.length == 1)
       {
@@ -107,7 +107,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // "/w ore"
 
     // "/w pre [<count>]"
-    if (args.length >= 1 && args[0].equals("pre"))
+    if (args.length >= 1 && args[0].equalsIgnoreCase("pre"))
     {
       if (args.length == 1)
       {
@@ -140,7 +140,7 @@ public class WatsonCommand extends WatsonCommandBase
     }
 
     // "/w post [<count>]"
-    if (args.length >= 1 && args[0].equals("post"))
+    if (args.length >= 1 && args[0].equalsIgnoreCase("post"))
     {
       if (args.length == 1)
       {
@@ -173,7 +173,7 @@ public class WatsonCommand extends WatsonCommandBase
     }
 
     // "display" command.
-    if (args.length >= 1 && args[0].equals("display"))
+    if (args.length >= 1 && args[0].equalsIgnoreCase("display"))
     {
       if (args.length == 1)
       {
@@ -183,12 +183,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 2)
       {
-        if (args[1].equals("on"))
+        if (args[1].equalsIgnoreCase("on"))
         {
           display.setDisplayed(true);
           return;
         }
-        else if (args[1].equals("off"))
+        else if (args[1].equalsIgnoreCase("off"))
         {
           display.setDisplayed(false);
           return;
@@ -197,7 +197,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // display
 
     // "outline" command.
-    if (args.length >= 1 && args[0].equals("outline"))
+    if (args.length >= 1 && args[0].equalsIgnoreCase("outline"))
     {
       if (args.length == 1)
       {
@@ -207,12 +207,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 2)
       {
-        if (args[1].equals("on"))
+        if (args[1].equalsIgnoreCase("on"))
         {
           display.setOutlineShown(true);
           return;
         }
-        else if (args[1].equals("off"))
+        else if (args[1].equalsIgnoreCase("off"))
         {
           display.setOutlineShown(false);
           return;
@@ -221,7 +221,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // outline
 
     // "/w anno" command.
-    if (args.length >= 1 && args[0].equals("anno"))
+    if (args.length >= 1 && args[0].equalsIgnoreCase("anno"))
     {
       if (args.length == 1)
       {
@@ -231,12 +231,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 2)
       {
-        if (args[1].equals("on"))
+        if (args[1].equalsIgnoreCase("on"))
         {
           display.setAnnotationsShown(true);
           return;
         }
-        else if (args[1].equals("off"))
+        else if (args[1].equalsIgnoreCase("off"))
         {
           display.setAnnotationsShown(false);
           return;
@@ -245,7 +245,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // anno
 
     // "vector" command.
-    if (args.length >= 1 && args[0].equals("vector"))
+    if (args.length >= 1 && args[0].equalsIgnoreCase("vector"))
     {
       if (handleVectorCommand(sender, args))
       {
@@ -254,7 +254,7 @@ public class WatsonCommand extends WatsonCommandBase
     }
 
     // "/w label" command.
-    if (args.length >= 1 && args[0].equals("label"))
+    if (args.length >= 1 && args[0].equalsIgnoreCase("label"))
     {
       if (args.length == 1)
       {
@@ -264,12 +264,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 2)
       {
-        if (args[1].equals("on"))
+        if (args[1].equalsIgnoreCase("on"))
         {
           display.setLabelsShown(true);
           return;
         }
-        else if (args[1].equals("off"))
+        else if (args[1].equalsIgnoreCase("off"))
         {
           display.setLabelsShown(false);
           return;
@@ -278,7 +278,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // "/w label"
 
     // Ore teleport commands: /w tp [next|prev|<number>]
-    if (args.length >= 1 && args[0].equals("tp"))
+    if (args.length >= 1 && args[0].equalsIgnoreCase("tp"))
     {
       OreDB oreDB = Controller.instance.getBlockEditSet().getOreDB();
       if (args.length == 1)
@@ -288,12 +288,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 2)
       {
-        if (args[1].equals("next"))
+        if (args[1].equalsIgnoreCase("next"))
         {
           oreDB.tpNext();
           return;
         }
-        else if (args[1].equals("prev"))
+        else if (args[1].equalsIgnoreCase("prev"))
         {
           oreDB.tpPrev();
           return;
@@ -314,25 +314,25 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w tp
 
     // "/w edits" command.
-    if (args[0].equals("edits"))
+    if (args[0].equalsIgnoreCase("edits"))
     {
-      if (args.length == 1 || (args.length == 2 && args[1].equals("list")))
+      if (args.length == 1 || (args.length == 2 && args[1].equalsIgnoreCase("list")))
       {
         Controller.instance.getBlockEditSet().listEdits();
         return;
       }
       else if (args.length >= 3)
       {
-        if (args[1].equals("hide") || args[1].equals("show"))
+        if (args[1].equalsIgnoreCase("hide") || args[1].equalsIgnoreCase("show"))
         {
           for (int i = 2; i < args.length; ++i)
           {
             Controller.instance.getBlockEditSet().setEditVisibility(args[i],
-                                                                    args[1].equals("show"));
+                                                                    args[1].equalsIgnoreCase("show"));
           }
           return;
         }
-        else if (args[1].equals("remove"))
+        else if (args[1].equalsIgnoreCase("remove"))
         {
           for (int i = 2; i < args.length; ++i)
           {
@@ -344,22 +344,22 @@ public class WatsonCommand extends WatsonCommandBase
     } // "/w edits"
 
     // "/w filter" command.
-    if (args[0].equals("filter"))
+    if (args[0].equalsIgnoreCase("filter"))
     {
       Filters filters = Controller.instance.getFilters();
-      if (args.length == 1 || (args.length == 2 && args[1].equals("list")))
+      if (args.length == 1 || (args.length == 2 && args[1].equalsIgnoreCase("list")))
       {
         filters.list();
         return;
       }
-      else if (args.length == 2 && args[1].equals("clear"))
+      else if (args.length == 2 && args[1].equalsIgnoreCase("clear"))
       {
         filters.clear();
         return;
       }
       else if (args.length >= 3)
       {
-        if (args[1].equals("add"))
+        if (args[1].equalsIgnoreCase("add"))
         {
           for (int i = 2; i < args.length; ++i)
           {
@@ -367,7 +367,7 @@ public class WatsonCommand extends WatsonCommandBase
           }
           return;
         }
-        else if (args[1].equals("remove"))
+        else if (args[1].equalsIgnoreCase("remove"))
         {
           for (int i = 2; i < args.length; ++i)
           {
@@ -379,9 +379,9 @@ public class WatsonCommand extends WatsonCommandBase
     } // "/w filter"
 
     // File commands.
-    if (args.length >= 2 && args[0].equals("file"))
+    if (args.length >= 2 && args[0].equalsIgnoreCase("file"))
     {
-      if (args[1].equals("list"))
+      if (args[1].equalsIgnoreCase("list"))
       {
         if (args.length == 2)
         {
@@ -416,23 +416,23 @@ public class WatsonCommand extends WatsonCommandBase
           return;
         }
       }
-      else if (args[1].equals("delete") && args.length == 3)
+      else if (args[1].equalsIgnoreCase("delete") && args.length == 3)
       {
         Controller.instance.deleteBlockEditFiles(args[2]);
         return;
       }
-      else if (args[1].equals("expire") && args.length == 3)
+      else if (args[1].equalsIgnoreCase("expire") && args.length == 3)
       {
         Controller.instance.expireBlockEditFiles(args[2]);
         return;
       }
-      else if (args[1].equals("load") && args.length == 3)
+      else if (args[1].equalsIgnoreCase("load") && args.length == 3)
       {
         // args[2] is either a full file name or a player name.
         Controller.instance.loadBlockEditFile(args[2]);
         return;
       }
-      else if (args[1].equals("save"))
+      else if (args[1].equalsIgnoreCase("save"))
       {
         if (args.length == 2)
         {
@@ -448,7 +448,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // file
 
     // "/w config" command with parameters.
-    if (args.length >= 2 && args[0].equals("config"))
+    if (args.length >= 2 && args[0].equalsIgnoreCase("config"))
     {
       if (handleConfigCommand(sender, args))
       {
@@ -457,7 +457,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // config with parameters
 
     // "/w config" with no parameters, direct to /w config help
-    if (args.length == 1 && args[0].equals("config"))
+    if (args.length == 1 && args[0].equalsIgnoreCase("config"))
     {
       String w = Configuration.instance.getWatsonPrefix();
       localOutput(sender, "Type \"/" + w + " config help\" for help with configuration options.");
@@ -484,22 +484,22 @@ public class WatsonCommand extends WatsonCommandBase
     }
     else if (args.length == 2)
     {
-      if (args[1].equals("on"))
+      if (args[1].equalsIgnoreCase("on"))
       {
         display.setVectorsShown(true);
         return true;
       }
-      else if (args[1].equals("off"))
+      else if (args[1].equalsIgnoreCase("off"))
       {
         display.setVectorsShown(false);
         return true;
       }
-      else if (args[1].equals("creations"))
+      else if (args[1].equalsIgnoreCase("creations"))
       {
         display.setLinkedCreations(!display.isLinkedCreations());
         return true;
       }
-      else if (args[1].equals("destructions"))
+      else if (args[1].equalsIgnoreCase("destructions"))
       {
         display.setLinkedDestructions(!display.isLinkedDestructions());
         return true;
@@ -507,33 +507,33 @@ public class WatsonCommand extends WatsonCommandBase
     }
     else if (args.length == 3)
     {
-      if (args[1].equals("creations"))
+      if (args[1].equalsIgnoreCase("creations"))
       {
-        if (args[2].equals("on"))
+        if (args[2].equalsIgnoreCase("on"))
         {
           display.setLinkedCreations(true);
           return true;
         }
-        else if (args[2].equals("off"))
+        else if (args[2].equalsIgnoreCase("off"))
         {
           display.setLinkedCreations(false);
           return true;
         }
       }
-      else if (args[1].equals("destructions"))
+      else if (args[1].equalsIgnoreCase("destructions"))
       {
-        if (args[2].equals("on"))
+        if (args[2].equalsIgnoreCase("on"))
         {
           display.setLinkedDestructions(true);
           return true;
         }
-        else if (args[2].equals("off"))
+        else if (args[2].equalsIgnoreCase("off"))
         {
           display.setLinkedDestructions(false);
           return true;
         }
       }
-      else if (args[1].equals("length"))
+      else if (args[1].equalsIgnoreCase("length"))
       {
         display.setMinVectorLength(Float.parseFloat(args[2]), true);
         return true;
@@ -551,7 +551,7 @@ public class WatsonCommand extends WatsonCommandBase
   protected boolean handleConfigCommand(ICommandSender sender, String[] args)
   {
     // Enable or disable the mod as a whole.
-    if (args[1].equals("watson"))
+    if (args[1].equalsIgnoreCase("watson"))
     {
       if (args.length == 2)
       {
@@ -560,12 +560,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 3)
       {
-        if (args[2].equals("on"))
+        if (args[2].equalsIgnoreCase("on"))
         {
           Configuration.instance.setEnabled(true);
           return true;
         }
-        else if (args[2].equals("off"))
+        else if (args[2].equalsIgnoreCase("off"))
         {
           Configuration.instance.setEnabled(false);
           return true;
@@ -574,7 +574,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config watson
 
     // Enable or disable debug logging.
-    if (args[1].equals("debug"))
+    if (args[1].equalsIgnoreCase("debug"))
     {
       if (args.length == 2)
       {
@@ -583,12 +583,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 3)
       {
-        if (args[2].equals("on"))
+        if (args[2].equalsIgnoreCase("on"))
         {
           Configuration.instance.setDebug(true);
           return true;
         }
-        else if (args[2].equals("off"))
+        else if (args[2].equalsIgnoreCase("off"))
         {
           Configuration.instance.setDebug(false);
           return true;
@@ -597,7 +597,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config debug
 
     // Enable or disable automatic "/lb coords" paging.
-    if (args[1].equals("auto_page"))
+    if (args[1].equalsIgnoreCase("auto_page"))
     {
       if (args.length == 2)
       {
@@ -606,12 +606,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 3)
       {
-        if (args[2].equals("on"))
+        if (args[2].equalsIgnoreCase("on"))
         {
           Configuration.instance.setAutoPage(true);
           return true;
         }
-        else if (args[2].equals("off"))
+        else if (args[2].equalsIgnoreCase("off"))
         {
           Configuration.instance.setAutoPage(false);
           return true;
@@ -620,7 +620,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config auto_page
 
     // Set minimum time separation between automatic "/region info"s.
-    if (args[1].equals("region_info_timeout"))
+    if (args[1].equalsIgnoreCase("region_info_timeout"))
     {
       if (args.length == 3)
       {
@@ -645,7 +645,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config region_info_timeout
 
     // Set the text billboard background colour.
-    if (args[1].equals("billboard_background"))
+    if (args[1].equalsIgnoreCase("billboard_background"))
     {
       if (args.length == 3)
       {
@@ -672,7 +672,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config billboard_background
 
     // Set the text billboard foreground colour.
-    if (args[1].equals("billboard_foreground"))
+    if (args[1].equalsIgnoreCase("billboard_foreground"))
     {
       if (args.length == 3)
       {
@@ -699,7 +699,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config billboard_foreground
 
     // Enable or disable forced grouping of ores in creative mode.
-    if (args[1].equals("group_ores_in_creative"))
+    if (args[1].equalsIgnoreCase("group_ores_in_creative"))
     {
       if (args.length == 2)
       {
@@ -708,12 +708,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 3)
       {
-        if (args[2].equals("on"))
+        if (args[2].equalsIgnoreCase("on"))
         {
           Configuration.instance.setGroupingOresInCreative(true);
           return true;
         }
-        else if (args[2].equals("off"))
+        else if (args[2].equalsIgnoreCase("off"))
         {
           Configuration.instance.setGroupingOresInCreative(false);
           return true;
@@ -721,7 +721,7 @@ public class WatsonCommand extends WatsonCommandBase
       }
     } // /w config group_ores_in_creative
 
-    if (args[1].equals("teleport_command"))
+    if (args[1].equalsIgnoreCase("teleport_command"))
     {
       if (args.length >= 3)
       {
@@ -739,7 +739,7 @@ public class WatsonCommand extends WatsonCommandBase
 
     // Set minimum time separation between programmatically generated chat
     // messages sent to the server
-    if (args[1].equals("chat_timeout"))
+    if (args[1].equalsIgnoreCase("chat_timeout"))
     {
       if (args.length == 3)
       {
@@ -765,7 +765,7 @@ public class WatsonCommand extends WatsonCommandBase
 
     // Set the maximum number of pages of "/lb coords" results automatically
     // paged through.
-    if (args[1].equals("max_auto_pages"))
+    if (args[1].equalsIgnoreCase("max_auto_pages"))
     {
       if (args.length == 3)
       {
@@ -801,7 +801,7 @@ public class WatsonCommand extends WatsonCommandBase
 
     // Set the default number of edits to query when no count parameter is
     // specified with "/w pre".
-    if (args[1].equals("pre_count"))
+    if (args[1].equalsIgnoreCase("pre_count"))
     {
       if (args.length == 3)
       {
@@ -836,7 +836,7 @@ public class WatsonCommand extends WatsonCommandBase
 
     // Set the default number of edits to query when no count parameter is
     // specified with "/w post".
-    if (args[1].equals("post_count"))
+    if (args[1].equalsIgnoreCase("post_count"))
     {
       if (args.length == 3)
       {
@@ -870,7 +870,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config post_count
 
     // Set the prefix for Watson commands.
-    if (args[1].equals("watson_prefix"))
+    if (args[1].equalsIgnoreCase("watson_prefix"))
       if (args.length == 3)
       {
         String newPrefix = args[2];
@@ -896,7 +896,7 @@ public class WatsonCommand extends WatsonCommandBase
       } // /w config watson_prefix <prefix>
 
     // Enable or disable per-player screenshot subdirectories.
-    if (args[1].equals("ss_player_directory"))
+    if (args[1].equalsIgnoreCase("ss_player_directory"))
     {
       if (args.length == 2)
       {
@@ -905,12 +905,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 3)
       {
-        if (args[2].equals("on"))
+        if (args[2].equalsIgnoreCase("on"))
         {
           Configuration.instance.setSsPlayerDirectory(true);
           return true;
         }
-        else if (args[2].equals("off"))
+        else if (args[2].equalsIgnoreCase("off"))
         {
           Configuration.instance.setSsPlayerDirectory(false);
           return true;
@@ -919,7 +919,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config ss_player_directory
 
     // Enable or disable per-player screenshot suffixes.
-    if (args[1].equals("ss_player_suffix"))
+    if (args[1].equalsIgnoreCase("ss_player_suffix"))
     {
       if (args.length == 2)
       {
@@ -928,12 +928,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 3)
       {
-        if (args[2].equals("on"))
+        if (args[2].equalsIgnoreCase("on"))
         {
           Configuration.instance.setSsPlayerSuffix(true);
           return true;
         }
-        else if (args[2].equals("off"))
+        else if (args[2].equalsIgnoreCase("off"))
         {
           Configuration.instance.setSsPlayerSuffix(false);
           return true;
@@ -942,7 +942,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config ss_player_directory
 
     // Set the anonymous screenshot subdirectory format specifier.
-    if (args[1].equals("ss_date_directory"))
+    if (args[1].equalsIgnoreCase("ss_date_directory"))
     {
       if (args.length == 2)
       {
@@ -958,7 +958,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config ss_date_directory
 
     // Enable or disable the reformatting of query results.
-    if (args[1].equals("reformat_query_results"))
+    if (args[1].equalsIgnoreCase("reformat_query_results"))
     {
       if (args.length == 2)
       {
@@ -967,12 +967,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 3)
       {
-        if (args[2].equals("on"))
+        if (args[2].equalsIgnoreCase("on"))
         {
           Configuration.instance.setReformatQueryResults(true);
           return true;
         }
-        else if (args[2].equals("off"))
+        else if (args[2].equalsIgnoreCase("off"))
         {
           Configuration.instance.setReformatQueryResults(false);
           return true;
@@ -981,7 +981,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config reformat_query_results
 
     // Enable or disable the recolouring of query results.
-    if (args[1].equals("recolour_query_results"))
+    if (args[1].equalsIgnoreCase("recolour_query_results"))
     {
       if (args.length == 2)
       {
@@ -990,12 +990,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 3)
       {
-        if (args[2].equals("on"))
+        if (args[2].equalsIgnoreCase("on"))
         {
           Configuration.instance.setRecolourQueryResults(true);
           return true;
         }
-        else if (args[2].equals("off"))
+        else if (args[2].equalsIgnoreCase("off"))
         {
           Configuration.instance.setRecolourQueryResults(false);
           return true;
@@ -1004,7 +1004,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config recolour_query_results
 
     // Enable timestamp-only ordering of ore deposits.
-    if (args[1].equals("time_ordered_deposits"))
+    if (args[1].equalsIgnoreCase("time_ordered_deposits"))
     {
       if (args.length == 2)
       {
@@ -1013,12 +1013,12 @@ public class WatsonCommand extends WatsonCommandBase
       }
       else if (args.length == 3)
       {
-        if (args[2].equals("on"))
+        if (args[2].equalsIgnoreCase("on"))
         {
           Configuration.instance.setTimeOrderedDeposits(true);
           return true;
         }
-        else if (args[2].equals("off"))
+        else if (args[2].equalsIgnoreCase("off"))
         {
           Configuration.instance.setTimeOrderedDeposits(false);
           return true;
@@ -1027,7 +1027,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config time_ordered_deposits
 
     // Minimum vector length (initial value for /w vector length <double>).
-    if (args[1].equals("vector_length"))
+    if (args[1].equalsIgnoreCase("vector_length"))
     {
       if (args.length == 2)
       {
@@ -1051,7 +1051,7 @@ public class WatsonCommand extends WatsonCommandBase
     } // /w config vector_length
 
     // Help with /w config
-    if (args[1].equals("help"))
+    if (args[1].equalsIgnoreCase("help"))
     {
       String w = Configuration.instance.getWatsonPrefix();
       localOutput(sender,

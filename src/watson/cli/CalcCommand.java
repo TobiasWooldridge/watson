@@ -57,7 +57,7 @@ public class CalcCommand extends WatsonCommandBase
       help(sender);
       return;
     }
-    else if (args.length == 1 && args[0].equals("help"))
+    else if (args.length == 1 && args[0].equalsIgnoreCase("help"))
     {
       help(sender);
       return;

@@ -64,7 +64,7 @@ public class ClientCommandManager implements ICommandManager
     {
       return false;
     }
-    ICommand command = getCommand(tokens[0].toLowerCase());
+    ICommand command = getCommand(tokens[0]);
     if (command != null)
     {
       executeCommand(getCommandSender(), commandLine);
@@ -80,7 +80,7 @@ public class ClientCommandManager implements ICommandManager
    */
   public void registerCommand(ICommand command)
   {
-    _commands.put(command.getCommandName(), command);
+    _commands.put(command.getCommandName().toLowerCase(), command);
     _canonicalCommands.add(command);
 
     // Add all aliases of the command.
@@ -89,7 +89,7 @@ public class ClientCommandManager implements ICommandManager
     {
       for (String alias : aliases)
       {
-        _commands.put(alias, command);
+        _commands.put(alias.toLowerCase(), command);
       }
     }
   } // registerCommand
@@ -102,7 +102,7 @@ public class ClientCommandManager implements ICommandManager
    */
   public void unregisterCommand(ICommand command)
   {
-    _commands.remove(command.getCommandName());
+    _commands.remove(command.getCommandName().toLowerCase());
     _canonicalCommands.remove(command);
 
     // remove all aliases of the command.
@@ -111,7 +111,7 @@ public class ClientCommandManager implements ICommandManager
     {
       for (String alias : aliases)
       {
-        _commands.remove(alias);
+        _commands.remove(alias.toLowerCase());
       }
     }
   } // unregisterCommand
@@ -126,7 +126,7 @@ public class ClientCommandManager implements ICommandManager
    */
   public ICommand getCommand(String name)
   {
-    return _commands.get(name);
+    return _commands.get(name.toLowerCase());
   }
 
   // --------------------------------------------------------------------------

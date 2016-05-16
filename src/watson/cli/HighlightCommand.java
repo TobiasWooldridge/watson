@@ -39,12 +39,12 @@ public class HighlightCommand extends WatsonCommandBase
     }
     else if (args.length == 1)
     {
-      if (args[0].equals("help"))
+      if (args[0].equalsIgnoreCase("help"))
       {
         help(sender);
         return;
       }
-      else if (args[0].equals("list"))
+      else if (args[0].equalsIgnoreCase("list"))
       {
         highlighter.listHighlights();
         return;
@@ -52,7 +52,7 @@ public class HighlightCommand extends WatsonCommandBase
     }
     else if (args.length == 2)
     {
-      if (args[0].equals("remove"))
+      if (args[0].equalsIgnoreCase("remove"))
       {
         int index = parseInt(args[1], 1);
         highlighter.removeHighlight(index);
@@ -61,7 +61,7 @@ public class HighlightCommand extends WatsonCommandBase
     }
     else if (args.length >= 3)
     {
-      if (args[0].equals("add") || args[0].equals("select"))
+      if (args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("select"))
       {
         // Allow patterns to contain spaces, rather than requiring \s.
         StringBuilder pattern = new StringBuilder();
@@ -74,7 +74,7 @@ public class HighlightCommand extends WatsonCommandBase
           }
         }
         highlighter.addHighlight(args[1], pattern.toString(),
-          args[0].equals("select"));
+          args[0].equalsIgnoreCase("select"));
         return;
       }
     }
