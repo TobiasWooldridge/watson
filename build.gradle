@@ -55,12 +55,12 @@ repositories {
 }
 
 configurations {
-    snakyam
+    snakeyaml
 }
 
 dependencies {
     compile 'org.yaml:snakeyaml:1.18-SNAPSHOT'
-    snakyaml 'org.yaml:snakeyaml:1.18-SNAPSHOT'
+    snakeyaml 'org.yaml:snakeyaml:1.18-SNAPSHOT'
     // It's ugly but it works which is all a gradle newbie needs
 }
 
