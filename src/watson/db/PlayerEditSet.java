@@ -181,11 +181,11 @@ public class PlayerEditSet
     if (settings.areVectorsShown() && isVisible() && !_edits.isEmpty())
     {
       final Tessellator tess = Tessellator.getInstance();
-      final VertexBuffer vr = tess.getBuffer();
-      vr.begin(GL.GL_LINES, GL.VF_POSITION);
+      final VertexBuffer vb = tess.getBuffer();
+      vb.begin(GL.GL_LINES, GL.VF_POSITION);
 
       // TODO: Make the vector colour and thickness configurable.
-      vr.tex(colour.getRGB(), colour.getAlpha());
+      vb.tex(colour.getRGB(), colour.getAlpha());
       GL11.glLineWidth(0.5f);
 
       // Unit X and Y vectors used for cross products to get arrow axes.
@@ -217,8 +217,8 @@ public class PlayerEditSet
             if (length >= settings.getMinVectorLength())
             {
               // Draw the vector.
-              vr.pos(pPos.xCoord, pPos.yCoord, pPos.zCoord);
-              vr.pos(nPos.xCoord, nPos.yCoord, nPos.zCoord);
+              vb.pos(pPos.xCoord, pPos.yCoord, pPos.zCoord).endVertex();
+              vb.pos(nPos.xCoord, nPos.yCoord, nPos.zCoord).endVertex();
 
               // Length from arrow tip to midpoint of vector as a fraction of
               // the total vector length. Scale the arrow in proportion to the
@@ -262,14 +262,14 @@ public class PlayerEditSet
                                     fin2.zCoord * arrowScale * length);
 
               // Draw four fins.
-              vr.pos(tip.xCoord, tip.yCoord, tip.zCoord);
-              vr.pos(tail.xCoord + draw1.xCoord, tail.yCoord + draw1.yCoord, tail.zCoord + draw1.zCoord);
-              vr.pos(tip.xCoord, tip.yCoord, tip.zCoord);
-              vr.pos(tail.xCoord - draw1.xCoord, tail.yCoord - draw1.yCoord, tail.zCoord - draw1.zCoord);
-              vr.pos(tip.xCoord, tip.yCoord, tip.zCoord);
-              vr.pos(tail.xCoord + draw2.xCoord, tail.yCoord + draw2.yCoord, tail.zCoord + draw2.zCoord);
-              vr.pos(tip.xCoord, tip.yCoord, tip.zCoord);
-              vr.pos(tail.xCoord - draw2.xCoord, tail.yCoord - draw2.yCoord, tail.zCoord - draw2.zCoord);
+              vb.pos(tip.xCoord, tip.yCoord, tip.zCoord).endVertex();
+              vb.pos(tail.xCoord + draw1.xCoord, tail.yCoord + draw1.yCoord, tail.zCoord + draw1.zCoord).endVertex();
+              vb.pos(tip.xCoord, tip.yCoord, tip.zCoord).endVertex();
+              vb.pos(tail.xCoord - draw1.xCoord, tail.yCoord - draw1.yCoord, tail.zCoord - draw1.zCoord).endVertex();
+              vb.pos(tip.xCoord, tip.yCoord, tip.zCoord).endVertex();
+              vb.pos(tail.xCoord + draw2.xCoord, tail.yCoord + draw2.yCoord, tail.zCoord + draw2.zCoord).endVertex();
+              vb.pos(tip.xCoord, tip.yCoord, tip.zCoord).endVertex();
+              vb.pos(tail.xCoord - draw2.xCoord, tail.yCoord - draw2.yCoord, tail.zCoord - draw2.zCoord).endVertex();
             } // if we are drawing this vector
             prev = next;
           } // if

@@ -3,9 +3,6 @@ package watson.model;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import org.lwjgl.opengl.GL11;
-
 import com.mumfrey.liteloader.gl.GL;
 
 import watson.db.BlockType;
@@ -93,44 +90,44 @@ public abstract class BlockModel
     double yTop, ARGB colour, float lineWidth)
   {
     Tessellator tess = Tessellator.getInstance();
-    VertexBuffer vr = tess.getBuffer();
+    VertexBuffer vb = tess.getBuffer();
 
     // Bottom face.
-    vr.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
-    vr.color(colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getAlpha());
-    GL11.glLineWidth(lineWidth);
-    vr.pos(xBot1, yBot, zBot1);
-    vr.pos(xBot2, yBot, zBot1);
-    vr.pos(xBot2, yBot, zBot2);
-    vr.pos(xBot1, yBot, zBot2);
+    vb.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
+    vb.color(colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getAlpha());
+    GL.glLineWidth(lineWidth);
+    vb.pos(xBot1, yBot, zBot1).endVertex();
+    vb.pos(xBot2, yBot, zBot1).endVertex();
+    vb.pos(xBot2, yBot, zBot2).endVertex();
+    vb.pos(xBot1, yBot, zBot2).endVertex();
     tess.draw();
 
     // Top face.
-    vr.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
-    vr.color(colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getAlpha());
-    GL11.glLineWidth(lineWidth);
-    vr.pos(xTop1, yTop, zTop1);
-    vr.pos(xTop2, yTop, zTop1);
-    vr.pos(xTop2, yTop, zTop2);
-    vr.pos(xTop1, yTop, zTop2);
+    vb.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
+    vb.color(colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getAlpha());
+    GL.glLineWidth(lineWidth);
+    vb.pos(xTop1, yTop, zTop1).endVertex();
+    vb.pos(xTop2, yTop, zTop1).endVertex();
+    vb.pos(xTop2, yTop, zTop2).endVertex();
+    vb.pos(xTop1, yTop, zTop2).endVertex();
     tess.draw();
 
     // Vertical lines joining top and bottom.
-    vr.begin(GL.GL_LINES, GL.VF_POSITION);
-    vr.color(colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getAlpha());
-    GL11.glLineWidth(lineWidth);
+    vb.begin(GL.GL_LINES, GL.VF_POSITION);
+    vb.color(colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getAlpha());
+    GL.glLineWidth(lineWidth);
 
-    vr.pos(xBot1, yBot, zBot1);
-    vr.pos(xTop1, yTop, zTop1);
+    vb.pos(xBot1, yBot, zBot1).endVertex();
+    vb.pos(xTop1, yTop, zTop1).endVertex();
 
-    vr.pos(xBot2, yBot, zBot1);
-    vr.pos(xTop2, yTop, zTop1);
+    vb.pos(xBot2, yBot, zBot1).endVertex();
+    vb.pos(xTop2, yTop, zTop1).endVertex();
 
-    vr.pos(xBot1, yBot, zBot2);
-    vr.pos(xTop1, yTop, zTop2);
+    vb.pos(xBot1, yBot, zBot2).endVertex();
+    vb.pos(xTop1, yTop, zTop2).endVertex();
 
-    vr.pos(xBot2, yBot, zBot2);
-    vr.pos(xTop2, yTop, zTop2);
+    vb.pos(xBot2, yBot, zBot2).endVertex();
+    vb.pos(xTop2, yTop, zTop2).endVertex();
     tess.draw();
   } // renderTaperedBox
 

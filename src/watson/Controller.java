@@ -23,7 +23,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 
 import org.lwjgl.opengl.GL11;
-
 import watson.chat.Chat;
 import watson.cli.AnnoCommand;
 import watson.cli.CalcCommand;
@@ -714,21 +713,21 @@ public class Controller
     if (_selection != null && getDisplaySettings().isSelectionShown())
     {
       Tessellator tess = Tessellator.getInstance();
-      VertexBuffer vr = tess.getBuffer();
-      vr.begin(GL.GL_LINES, GL.VF_POSITION);
-      vr.color(255, 0, 255, 128);
-      GL11.glLineWidth(4.0f);
+      VertexBuffer vb = tess.getBuffer();
+      vb.begin(GL.GL_LINES, GL.VF_POSITION);
+      vb.color(255, 0, 255, 128);
+      GL.glLineWidth(4.0f);
 
       final float halfSize = 0.3f;
       float x = _selection.x + 0.5f;
       float y = _selection.y + 0.5f;
       float z = _selection.z + 0.5f;
-      vr.pos(x - halfSize, y, z);
-      vr.pos(x + halfSize, y, z);
-      vr.pos(x, y - halfSize, z);
-      vr.pos(x, y + halfSize, z);
-      vr.pos(x, y, z - halfSize);
-      vr.pos(x, y, z + halfSize);
+      vb.pos(x - halfSize, y, z).endVertex();
+      vb.pos(x + halfSize, y, z).endVertex();
+      vb.pos(x, y - halfSize, z).endVertex();
+      vb.pos(x, y + halfSize, z).endVertex();
+      vb.pos(x, y, z - halfSize).endVertex();
+      vb.pos(x, y, z + halfSize).endVertex();
       tess.draw();
 
       if (_selection.playerEditSet != null)
@@ -737,13 +736,13 @@ public class Controller
         BlockEdit predecessor = _selection.playerEditSet.getEditBefore(_selection);
         if (predecessor != null)
         {
-          vr.begin(GL.GL_LINES, GL.VF_POSITION);
-          vr.color(255, 0, 255, 128);
+          vb.begin(GL.GL_LINES, GL.VF_POSITION);
+          vb.color(255, 0, 255, 128);
           GL11.glEnable(GL11.GL_LINE_STIPPLE);
           GL11.glLineStipple(8, (short) 0xAAAA);
           GL11.glLineWidth(3.0f);
-          vr.pos(predecessor.x + 0.5f, predecessor.y + 0.5f, predecessor.z + 0.5f);
-          vr.pos(x, y, z);
+          vb.pos(predecessor.x + 0.5f, predecessor.y + 0.5f, predecessor.z + 0.5f).endVertex();
+          vb.pos(x, y, z).endVertex();
           tess.draw();
           GL11.glDisable(GL11.GL_LINE_STIPPLE);
         }

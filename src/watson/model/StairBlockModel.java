@@ -31,7 +31,7 @@ public class StairBlockModel extends BlockModel
   public void render(BlockType blockType, int x, int y, int z)
   {
     Tessellator tess = Tessellator.getInstance();
-      VertexBuffer vr = tess.getBuffer();
+    VertexBuffer vb = tess.getBuffer();
 
     // Opposite corners.
     double x1 = x + blockType.getX1();
@@ -46,57 +46,55 @@ public class StairBlockModel extends BlockModel
     double zMid = z + 0.5 * (blockType.getZ1() + blockType.getZ2());
 
     // x1 side.
-      vr.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
-      vr.color(blockType.getARGB().getRed(),
-      blockType.getARGB().getGreen(), blockType.getARGB().getBlue(),
-      blockType.getARGB().getAlpha());
-    GL11.glLineWidth(blockType.getLineWidth());
-      vr.pos(x1, y1, z1);
-      vr.pos(x1, y1, z2);
-      vr.pos(x1, y2, z2);
-      vr.pos(x1, y2, zMid);
-      vr.pos(x1, yMid, zMid);
-      vr.pos(x1, yMid, z1);
+    vb.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
+    vb.color(blockType.getARGB().getRed(), blockType.getARGB().getGreen(), blockType.getARGB().getBlue(), blockType.getARGB().getAlpha());
+    GL.glLineWidth(blockType.getLineWidth());
+    vb.pos(x1, y1, z1).endVertex();
+    vb.pos(x1, y1, z2).endVertex();
+    vb.pos(x1, y2, z2).endVertex();
+    vb.pos(x1, y2, zMid).endVertex();
+    vb.pos(x1, yMid, zMid).endVertex();
+    vb.pos(x1, yMid, z1).endVertex();
     tess.draw();
 
     // x2 side.
-    vr.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
-      vr.color(blockType.getARGB().getRed(),
+    vb.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
+      vb.color(blockType.getARGB().getRed(),
       blockType.getARGB().getGreen(), blockType.getARGB().getBlue(),
       blockType.getARGB().getAlpha());
     GL11.glLineWidth(blockType.getLineWidth());
-      vr.pos(x2, y1, z1);
-      vr.pos(x2, y1, z2);
-      vr.pos(x2, y2, z2);
-      vr.pos(x2, y2, zMid);
-      vr.pos(x2, yMid, zMid);
-      vr.pos(x2, yMid, z1);
+      vb.pos(x2, y1, z1);
+      vb.pos(x2, y1, z2);
+      vb.pos(x2, y2, z2);
+      vb.pos(x2, y2, zMid);
+      vb.pos(x2, yMid, zMid);
+      vb.pos(x2, yMid, z1);
     tess.draw();
 
     // Horizontal lines joining the two sides.
-    vr.begin(GL.GL_LINES, GL.VF_POSITION);
-      vr.color(blockType.getARGB().getRed(),
+    vb.begin(GL.GL_LINES, GL.VF_POSITION);
+      vb.color(blockType.getARGB().getRed(),
       blockType.getARGB().getGreen(), blockType.getARGB().getBlue(),
       blockType.getARGB().getAlpha());
     GL11.glLineWidth(blockType.getLineWidth());
 
-      vr.pos(x1, y1, z1);
-      vr.pos(x2, y1, z1);
+      vb.pos(x1, y1, z1);
+      vb.pos(x2, y1, z1);
 
-      vr.pos(x1, y1, z2);
-      vr.pos(x2, y1, z2);
+      vb.pos(x1, y1, z2);
+      vb.pos(x2, y1, z2);
 
-      vr.pos(x1, y2, z2);
-      vr.pos(x2, y2, z2);
+      vb.pos(x1, y2, z2);
+      vb.pos(x2, y2, z2);
 
-      vr.pos(x1, y2, zMid);
-      vr.pos(x2, y2, zMid);
+      vb.pos(x1, y2, zMid);
+      vb.pos(x2, y2, zMid);
 
-      vr.pos(x1, yMid, zMid);
-      vr.pos(x2, yMid, zMid);
+      vb.pos(x1, yMid, zMid);
+      vb.pos(x2, yMid, zMid);
 
-      vr.pos(x1, yMid, z1);
-      vr.pos(x2, yMid, z1);
+      vb.pos(x1, yMid, z1);
+      vb.pos(x2, yMid, z1);
     tess.draw();
   } // render
 } // class StairBlockModel

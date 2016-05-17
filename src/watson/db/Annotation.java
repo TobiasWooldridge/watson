@@ -161,10 +161,10 @@ public class Annotation
       // Draw background plate.
       vr.begin(GL.GL_QUADS, GL.VF_POSITION);
       vr.tex(bgARGB & 0x00FFFFFF, (bgARGB >>> 24) & 0xFF);
-      vr.pos(-textWidth - 1, -6, 0.0);
-      vr.pos(-textWidth - 1, 4, 0.0);
-      vr.pos(textWidth + 1, 4, 0.0);
-      vr.pos(textWidth + 1, -6, 0.0);
+      vr.pos(-textWidth - 1, -6, 0.0).endVertex();
+      vr.pos(-textWidth - 1, 4, 0.0).endVertex();
+      vr.pos(textWidth + 1, 4, 0.0).endVertex();
+      vr.pos(textWidth + 1, -6, 0.0).endVertex();
       tessellator.draw();
 
       // Draw text.
