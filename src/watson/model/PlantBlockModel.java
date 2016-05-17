@@ -44,8 +44,8 @@ public class PlantBlockModel extends BlockModel
 
     // First rectangle.
     vb.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
-    vb.color(blockType.getARGB().getRed(),
-            blockType.getARGB().getGreen(), blockType.getARGB().getBlue(),
+    GL.glColor4f(blockType.getARGB().getRed() / 255f,
+            blockType.getARGB().getGreen() / 255f, blockType.getARGB().getBlue() / 255f,
             blockType.getARGB().getAlpha());
     GL.glLineWidth(blockType.getLineWidth());
     vb.pos(x1, y1, z1).endVertex();
@@ -56,8 +56,8 @@ public class PlantBlockModel extends BlockModel
 
     // Second rectangle.
     vb.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
-    vb.color(blockType.getARGB().getRed(),
-            blockType.getARGB().getGreen(), blockType.getARGB().getBlue(),
+    GL.glColor4f(blockType.getARGB().getRed() / 255f,
+            blockType.getARGB().getGreen() / 255f, blockType.getARGB().getBlue() / 255f,
             blockType.getARGB().getAlpha());
     GL.glLineWidth(blockType.getLineWidth());
     vb.pos(x1, y1, z2).endVertex();

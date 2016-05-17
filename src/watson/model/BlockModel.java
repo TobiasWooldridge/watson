@@ -94,7 +94,8 @@ public abstract class BlockModel
 
     // Bottom face.
     vb.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
-    vb.color(colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getAlpha());
+    GL.glColor4f(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha());
+    //vb.color(colour.getAlpha(), colour.getRed(), colour.getGreen(), colour.getBlue());
     GL.glLineWidth(lineWidth);
     vb.pos(xBot1, yBot, zBot1).endVertex();
     vb.pos(xBot2, yBot, zBot1).endVertex();
@@ -104,7 +105,8 @@ public abstract class BlockModel
 
     // Top face.
     vb.begin(GL.GL_LINE_LOOP, GL.VF_POSITION);
-    vb.color(colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getAlpha());
+    GL.glColor4f(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha());
+    //vb.color(colour.getAlpha(), colour.getRed(), colour.getGreen(), colour.getBlue());
     GL.glLineWidth(lineWidth);
     vb.pos(xTop1, yTop, zTop1).endVertex();
     vb.pos(xTop2, yTop, zTop1).endVertex();
@@ -114,7 +116,8 @@ public abstract class BlockModel
 
     // Vertical lines joining top and bottom.
     vb.begin(GL.GL_LINES, GL.VF_POSITION);
-    vb.color(colour.getRed(), colour.getGreen(), colour.getBlue(), colour.getAlpha());
+    GL.glColor4f(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha());
+    //vb.color(colour.getAlpha(), colour.getRed(), colour.getGreen(), colour.getBlue());
     GL.glLineWidth(lineWidth);
 
     vb.pos(xBot1, yBot, zBot1).endVertex();

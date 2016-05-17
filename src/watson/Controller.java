@@ -715,7 +715,7 @@ public class Controller
       Tessellator tess = Tessellator.getInstance();
       VertexBuffer vb = tess.getBuffer();
       vb.begin(GL.GL_LINES, GL.VF_POSITION);
-      vb.color(255, 0, 255, 128);
+      GL.glColor4f(255 / 255f, 0 / 255f, 255 / 255f, 128);
       GL.glLineWidth(4.0f);
 
       final float halfSize = 0.3f;
@@ -737,7 +737,7 @@ public class Controller
         if (predecessor != null)
         {
           vb.begin(GL.GL_LINES, GL.VF_POSITION);
-          vb.color(255, 0, 255, 128);
+          GL.glColor4f(255 / 255f, 0 / 255f, 255 / 255f, 128);
           GL11.glEnable(GL11.GL_LINE_STIPPLE);
           GL11.glLineStipple(8, (short) 0xAAAA);
           GL11.glLineWidth(3.0f);

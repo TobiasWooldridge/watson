@@ -185,8 +185,8 @@ public class PlayerEditSet
       vb.begin(GL.GL_LINES, GL.VF_POSITION);
 
       // TODO: Make the vector colour and thickness configurable.
-      vb.tex(colour.getRGB(), colour.getAlpha());
-      GL11.glLineWidth(0.5f);
+      GL.glColor4f(colour.getRed() / 255f, colour.getGreen() / 255f, colour.getBlue() / 255f, colour.getAlpha());
+      GL.glLineWidth(0.5f);
 
       // Unit X and Y vectors used for cross products to get arrow axes.
       Vec3d unitX = new Vec3d(1, 0, 0);

@@ -3,15 +3,13 @@ package watson.db;
 import com.mumfrey.liteloader.gl.GL;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.RenderManager;
 
-import org.lwjgl.opengl.GL11;
-
 import watson.Configuration;
 import watson.PrivateFieldsWatson;
+import watson.model.ARGB;
 
 // ----------------------------------------------------------------------------
 /**
@@ -136,31 +134,32 @@ public class Annotation
       dl = far;
     }
 
-    GlStateManager.pushMatrix();
+    GL.glPushMatrix();
 
     double scale = (0.05 * dl + 1.0) * scaleFactor;
-    GlStateManager.translate(dx, dy, dz);
-    GlStateManager.rotate(-renderManager.playerViewY, 0.0f, 1.0f, 0.0f);
-    GlStateManager.rotate(
+    GL.glTranslated(dx, dy, dz);
+    GL.glRotatef(-renderManager.playerViewY, 0.0f, 1.0f, 0.0f);
+    GL.glRotatef(
       mc.gameSettings.thirdPersonView != 2 ? renderManager.playerViewX
         : -renderManager.playerViewX, 1.0f, 0.0f, 0.0f);
-    GlStateManager.scale(-scale, -scale, scale);
-    GlStateManager.disableLighting();
-    GlStateManager.enableBlend();
-    GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+    GL.glScaled(-scale, -scale, scale);
+    GL.glDisableLighting();
+    GL.glEnableBlend();
+    GL.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
     Tessellator tessellator = Tessellator.getInstance();
     VertexBuffer vr = tessellator.getBuffer();
 
     int textWidth = fontRenderer.getStringWidth(text) >> 1;
     if (textWidth != 0)
     {
-      GlStateManager.disableTexture2D();
-      GlStateManager.disableDepth();
-      GlStateManager.depthMask(false);
+      GL.glDisableTexture2D();
+      GL.glDisableDepthTest();;
+      GL.glDepthMask(false);
 
       // Draw background plate.
       vr.begin(GL.GL_QUADS, GL.VF_POSITION);
-      vr.tex(bgARGB & 0x00FFFFFF, (bgARGB >>> 24) & 0xFF);
+      ARGB bgColour = new ARGB(bgARGB);
+      GL.glColor4f(bgColour.getRed() / 255f, bgColour.getGreen() / 255f, bgColour.getBlue() / 255f, bgColour.getAlpha());
       vr.pos(-textWidth - 1, -6, 0.0).endVertex();
       vr.pos(-textWidth - 1, 4, 0.0).endVertex();
       vr.pos(textWidth + 1, 4, 0.0).endVertex();
@@ -168,18 +167,18 @@ public class Annotation
       tessellator.draw();
 
       // Draw text.
-      GlStateManager.enableTexture2D();
-      GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+      GL.glEnableTexture2D();
+      GL.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
       fontRenderer.drawString(text, -textWidth, -5, fgARGB);
-      GlStateManager.enableDepth();
-      GlStateManager.depthMask(true);
+      GL.glEnableDepthTest();
+      GL.glDepthMask(true);
     }
 
-    GlStateManager.disableBlend();
-    GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
-    GlStateManager.enableTexture2D();
-    GlStateManager.enableLighting();
-    GlStateManager.popMatrix();
+    GL.glDisableBlend();
+    GL.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    GL.glEnableTexture2D();
+    GL.glEnableLighting();
+    GL.glPopMatrix();
   } // drawBillboard
 
   // --------------------------------------------------------------------------
