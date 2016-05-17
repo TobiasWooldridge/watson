@@ -150,6 +150,7 @@ public class Configuration
       _recolourQueryResults = (Boolean) dom.get("recolour_query_results");
       _timeOrderedDeposits = (Boolean) dom.get("time_ordered_deposits");
       _vectorLength = ((Double) dom.get("vector_length")).floatValue();
+      _useChatHighlights = ((Boolean) dom.get("chat_highlights"));
 
       for (Entry<String, ModifiedKeyBinding> entry : getKeyBindingsMap().entrySet())
       {
@@ -198,6 +199,7 @@ public class Configuration
       dom.put("recolour_query_results", _recolourQueryResults);
       dom.put("time_ordered_deposits", _timeOrderedDeposits);
       dom.put("vector_length", (double) _vectorLength);
+      dom.put("chat_highlights", _useChatHighlights);
 
       for (Entry<String, ModifiedKeyBinding> entry : getKeyBindingsMap().entrySet())
       {
@@ -854,6 +856,33 @@ public class Configuration
 
   // --------------------------------------------------------------------------
   /**
+   * Enable or disable  chat highlights
+   *
+   * @param enabled whether or not chat highlights should be used
+   */
+  public void useChatHighlights(boolean enabled)
+  {
+    _useChatHighlights = enabled;
+    Chat.localOutput(_useChatHighlights
+                    ? "Custom highlights in chat are now enabled."
+                    : "Custom highlights in chat are now disabled."
+    );
+    save();
+  }
+
+  // --------------------------------------------------------------------------
+  /**
+   * Return true if chat highlights are enabled
+   *
+   * @return true if chat highlights should be used
+   */
+  public boolean useChatHighlights()
+  {
+    return _useChatHighlights;
+  }
+
+  // --------------------------------------------------------------------------
+  /**
    * Return all {@link ModifiedKeyBindings} in the order they should be listed
    * in the configuration panel.
    *
@@ -901,6 +930,8 @@ public class Configuration
       root.addChild("recolour_query_results", new TypeValidatorNode(Boolean.class, true, true));
       root.addChild("time_ordered_deposits", new TypeValidatorNode(Boolean.class, true, false));
       root.addChild("vector_length", new TypeValidatorNode(Double.class, true, 4.0));
+
+      root.addChild("chat_highlights", new TypeValidatorNode(Boolean.class, true, true));
 
       for (Entry<String, ModifiedKeyBinding> entry : getKeyBindingsMap().entrySet())
       {
@@ -1097,6 +1128,11 @@ public class Configuration
    * The default minimum length of vectors for them to be visible.
    */
   protected float                         _vectorLength             = 4.0f;
+
+  /**
+   * If true, the chat higlighter will be enabled.
+   */
+  protected boolean                       _useChatHighlights        = true;
 
   /**
    * All {@link ModifiedKeyBindings} in the order they should be listed in the

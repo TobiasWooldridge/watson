@@ -3,6 +3,7 @@ package watson.cli;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
+import watson.Configuration;
 import watson.chat.Chat;
 import watson.chat.ChatHighlighter;
 
@@ -31,6 +32,10 @@ public class HighlightCommand extends WatsonCommandBase
   @Override
   public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
   {
+    if (!Configuration.instance.useChatHighlights()) {
+      localOutput(sender, "Chat highlights are currently disabled. Set chat_highlights to true in the configuration to enabled them. (May be broken currently :/)");
+      return;
+    }
     ChatHighlighter highlighter = Chat.getChatHighlighter();
     if (args.length == 0)
     {

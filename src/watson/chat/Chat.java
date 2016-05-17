@@ -7,6 +7,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import watson.Configuration;
 import watson.debug.Log;
 
 // ----------------------------------------------------------------------------
@@ -96,7 +97,7 @@ public class Chat
   {
     if (isChatGuiReady())
     {
-      ITextComponent highlighted = getChatHighlighter().highlight(chat);
+      ITextComponent highlighted = Configuration.instance.useChatHighlights() ? getChatHighlighter().highlight(chat) : chat;
       Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(highlighted);
     }
   }

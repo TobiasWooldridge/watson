@@ -75,6 +75,7 @@ public class ChatHighlighter
 
   // --------------------------------------------------------------------------
   /**
+   * TODO: Fix this. It doubles the message (first without formatting, second with)
    * Highlight the text in a chat component.
    * 
    * @param chat the text to highlight.

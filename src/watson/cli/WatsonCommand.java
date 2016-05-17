@@ -1050,6 +1050,29 @@ public class WatsonCommand extends WatsonCommandBase
       }
     } // /w config vector_length
 
+    // Enable or disable the recolouring of query results.
+    if (args[1].equalsIgnoreCase("chat_highlights"))
+    {
+      if (args.length == 2)
+      {
+        Configuration.instance.useChatHighlights(!Configuration.instance.useChatHighlights());
+        return true;
+      }
+      else if (args.length == 3)
+      {
+        if (args[2].equalsIgnoreCase("on"))
+        {
+          Configuration.instance.useChatHighlights(true);
+          return true;
+        }
+        else if (args[2].equalsIgnoreCase("off"))
+        {
+          Configuration.instance.useChatHighlights(false);
+          return true;
+        }
+      }
+    } // /w config chat_highlights
+
     // Help with /w config
     if (args[1].equalsIgnoreCase("help"))
     {
@@ -1107,6 +1130,8 @@ public class WatsonCommand extends WatsonCommandBase
                   "  /"
                     + w
                     + " config vector_length [decimal]: set the default minimum length of a vector for it to be visible");
+      localOutput(sender, "  /" + w
+              + " config chat_highlights [on/off] : enable or disable chat hilight functionality");
       return true;
     } // /w config help
 
@@ -1146,7 +1171,7 @@ public class WatsonCommand extends WatsonCommandBase
     localOutput(sender, "  /" + w + " file load <filename>|<playername>");
     localOutput(sender, "  /" + w + " file save [<filename>]");
     localOutput(sender, "  /" + w + " config <name> [<value>]");
-    localOutput(sender, "  /hl help");
+    localOutput(sender, "  /hl help" + (Configuration.instance.useChatHighlights() ? "" : " (Disabled!)"));
     localOutput(sender, "  /anno help");
 
     // Make the documentation link clickable.

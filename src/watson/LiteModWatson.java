@@ -195,7 +195,7 @@ public class LiteModWatson implements JoinGameListener, ChatFilter, Tickable,
   public boolean onChat(ITextComponent chat, String message, LiteLoaderEventBroker.ReturnValue<ITextComponent> newMessage)
   {
     boolean allowChat = ChatProcessor.instance.onChat(chat);
-    if (allowChat)
+    if (allowChat && Configuration.instance.useChatHighlights())
     {
       newMessage.set(Chat.getChatHighlighter().highlight(chat));
     }
