@@ -1131,7 +1131,7 @@ public class WatsonCommand extends WatsonCommandBase
                     + w
                     + " config vector_length [decimal]: set the default minimum length of a vector for it to be visible");
       localOutput(sender, "  /" + w
-              + " config chat_highlights [on/off] : enable or disable chat hilight functionality");
+              + " config chat_highlights [on/off] : enable or disable chat highlight functionality");
       return true;
     } // /w config help
 
