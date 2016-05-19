@@ -46,7 +46,7 @@ public class WatsonGuiScreen extends GuiScreen
     GuiResponder sliderResponder = new GuiPageButtonList.GuiResponder()
     {
       @Override
-      public void onTick(int id, float value)
+      public void setEntryValue(int id, float value)
       {
         // Update the display when the slider slides. Save the new length in
         // the configuration when the GUI closes.
@@ -55,12 +55,12 @@ public class WatsonGuiScreen extends GuiScreen
       }
 
       @Override
-      public void func_175321_a(int id, boolean value)
+      public void setEntryValue(int id, boolean value)
       {
       }
 
       @Override
-      public void func_175319_a(int id, String value)
+      public void setEntryValue(int id, String value)
       {
       }
     };
