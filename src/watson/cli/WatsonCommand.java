@@ -1050,7 +1050,7 @@ public class WatsonCommand extends WatsonCommandBase
       }
     } // /w config vector_length
 
-    // Enable or disable the recolouring of query results.
+    // Enable or disable the highlighting of words/phrases in chat.
     if (args[1].equalsIgnoreCase("chat_highlights"))
     {
       if (args.length == 2)
