@@ -48,7 +48,7 @@ public class WatsonObf extends Obf
   // and methods thereof.
 
   public static WatsonObf    KeyBinding                        = new WatsonObf("net.minecraft.client.settings.KeyBinding",
-                                                                               "bcc");
+                                                                               "bca");
   public static WatsonObf    KeyBinding_onTick                 = new WatsonObf("func_74507_a", "a", "onTick");
   public static WatsonObf    KeyBinding_setKeyBindState        = new WatsonObf("func_74510_a", "a", "setKeyBindState");
 
@@ -63,7 +63,7 @@ public class WatsonObf extends Obf
   // --------------------------------------------------------------------------
   // Private fields accessed by reflection.
 
-  protected static WatsonObf EnumChatFormatting_formattingCode = new WatsonObf("field_96329_z", "z", "formattingCode");
+  protected static WatsonObf TextFormatting_formattingCode     = new WatsonObf("field_96329_z", "z", "formattingCode");
   protected static WatsonObf RenderManager_renderPosX          = new WatsonObf("field_78725_b", "o", "renderPosX");
   protected static WatsonObf RenderManager_renderPosY          = new WatsonObf("field_78726_c", "p", "renderPosY");
   protected static WatsonObf RenderManager_renderPosZ          = new WatsonObf("field_78723_d", "q", "renderPosZ");

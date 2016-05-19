@@ -358,7 +358,7 @@ public class LiteModWatson implements JoinGameListener, ChatFilter, Tickable,
   {
     if (!ClientCommandManager.instance.handleClientCommand(chat))
     {
-      player.sendQueue.addToSendQueue(new CPacketChatMessage(chat));
+      player.connection.sendPacket(new CPacketChatMessage(chat));
     }
   }
 

@@ -29,7 +29,7 @@ public class PrivateFieldsWatson<P, T> extends PrivateFields<P, T>
 
   public static final PrivateFieldsWatson<TextFormatting, Character> formattingCode = new PrivateFieldsWatson<TextFormatting, Character>(
                                                                                           TextFormatting.class,
-                                                                                          WatsonObf.EnumChatFormatting_formattingCode);
+                                                                                          WatsonObf.TextFormatting_formattingCode);
   public static final PrivateFieldsWatson<RenderManager, Double>         renderPosX     = new PrivateFieldsWatson<RenderManager, Double>(
                                                                                           RenderManager.class,
                                                                                           WatsonObf.RenderManager_renderPosX);
