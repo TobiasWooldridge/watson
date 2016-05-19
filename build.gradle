@@ -81,6 +81,6 @@ litemod {
 }
 
 jar {
-    from { configurations.snakyaml.collect { it.isDirectory() ? it : zipTree(it) } }
+    from { configurations.snakeyaml.collect { it.isDirectory() ? it : zipTree(it) } }
     from litemod.outputs
 }
