@@ -931,7 +931,7 @@ public class Configuration
       root.addChild("time_ordered_deposits", new TypeValidatorNode(Boolean.class, true, false));
       root.addChild("vector_length", new TypeValidatorNode(Double.class, true, 4.0));
 
-      root.addChild("chat_highlights", new TypeValidatorNode(Boolean.class, true, true));
+      root.addChild("chat_highlights", new TypeValidatorNode(Boolean.class, true, false));
 
       for (Entry<String, ModifiedKeyBinding> entry : getKeyBindingsMap().entrySet())
       {
@@ -1132,7 +1132,7 @@ public class Configuration
   /**
    * If true, the chat higlighter will be enabled.
    */
-  protected boolean                       _useChatHighlights        = true;
+  protected boolean                       _useChatHighlights        = false;
 
   /**
    * All {@link ModifiedKeyBindings} in the order they should be listed in the
