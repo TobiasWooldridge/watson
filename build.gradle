@@ -72,7 +72,7 @@ litemod {
     name = "Watson"
     json {
         name = "Watson"
-        mcversion = "1.10"
+        mcversion = "1.10.2"
         //mixinConfigs += "mixins.watson.json"
         author = "totemo"
         description = "A 3-D log visualisation tool."
