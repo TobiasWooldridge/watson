@@ -1,6 +1,6 @@
 package watson;
 
-import net.minecraft.world.WorldSettings;
+import net.minecraft.world.GameType;
 import watson.chat.Chat;
 
 // ----------------------------------------------------------------------------
@@ -14,7 +14,7 @@ public class DisplaySettings
    * This method configures the initial display settings based on the server
    * being connected to and the game type.
    */
-  public void configure(@SuppressWarnings("unused") String serverIP, WorldSettings.GameType gameType)
+  public void configure(@SuppressWarnings("unused") String serverIP, GameType gameType)
   {
     // The Watson display defaults to on. On survival servers, assume the
     // presence of ModMode and its associated notifications to turn on or off
